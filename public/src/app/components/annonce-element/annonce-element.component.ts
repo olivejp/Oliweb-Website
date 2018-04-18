@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {AnnonceService} from "../../services/AnnonceService";
+import {Annonce} from "../../domain/annonce.model";
 
 @Component({
   selector: 'app-annonce-element',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnnonceElementComponent implements OnInit {
 
-  constructor() { }
+  annonceUid: string;
+
+  @Input()
+  annonce: Annonce;
+
+  constructor(private annonceService: AnnonceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.annonceUid = this.route.snapshot.params['uid'];
   }
-
 }

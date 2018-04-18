@@ -10,12 +10,15 @@ import {RouterModule, Routes} from "@angular/router";
 import {AnnonceElementComponent} from './components/annonce-element/annonce-element.component';
 import {AnnonceService} from "./services/AnnonceService";
 import {UserService} from "./services/UserService";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
-  {path: 'annonces/:id', component: AnnonceElementComponent},
+  {path: 'annonces/view/:uid', component: AnnonceElementComponent},
   {path: 'auth', component: UserSignInComponent},
-  {path: '', component: AppComponent}
+  {path: 'not-found', component: NotFoundComponent},
+  {path: '**', redirectTo: '/not-found'},
+  {path: '', component: AnnonceListComponent}
 ];
 
 @NgModule({
@@ -24,7 +27,8 @@ const appRoutes: Routes = [
     AboutComponent,
     AnnonceListComponent,
     UserSignInComponent,
-    AnnonceElementComponent
+    AnnonceElementComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

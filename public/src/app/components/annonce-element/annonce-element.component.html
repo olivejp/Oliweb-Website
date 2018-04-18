@@ -1,6 +1,8 @@
-<div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="{{annonce.photos[0]}}" alt="Card image cap">
-  <div class="card-body">
-    <p class="card-text">{{annonce.description}}</p>
+<div class="btn-group vignette" role="group" aria-label="Basic example">
+  <div *ngIf="annonce" class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{annonce.photos[0]}}" alt="{{annonce.photos[0]}}">
+    <div class="card-body">
+      <p class="card-text">{{annonce.description}}</p>
+    </div>
   </div>
 </div>

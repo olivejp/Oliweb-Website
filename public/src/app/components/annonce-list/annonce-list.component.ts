@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AnnonceService} from "../../services/AnnonceService";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
+import {Annonce} from "../../domain/annonce.model";
 
 @Component({
   selector: 'app-annonce-list-component',
@@ -9,7 +10,7 @@ import {Subscription} from "rxjs/Subscription";
   styleUrls: ['./annonce-list.component.scss']
 })
 export class AnnonceListComponent implements OnInit, OnDestroy {
-  annonces: any[];
+  annonces: Annonce[];
   annoncesSubscription: Subscription;
   constructor(private annonceService: AnnonceService, private router: Router) {}
 
@@ -26,8 +27,8 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/annonces', 'new']);
   }
 
-  onViewBook(id: number) {
-    this.router.navigate(['/annonces', 'view', id]);
+  onViewBook(index: number) {
+    this.router.navigate(['/annonces', 'view', this.annonces[index].uuid]);
   }
 
   ngOnDestroy() {

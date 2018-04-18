@@ -1,12 +1,7 @@
-import {Component, Injectable, OnInit} from '@angular/core';
-import * as firebase from "firebase";
+import {Injectable} from '@angular/core';
 import {Subject} from "rxjs/Subject";
-
-@Component({
-  selector: 'app-annonce-service',
-  templateUrl: './annonce-service.component.html',
-  styleUrls: ['./annonce-service.component.scss']
-})
+import DataSnapshot = firebase.database.DataSnapshot;
+import * as firebase from "firebase";
 
 @Injectable()
 export class AnnonceService {
@@ -23,11 +18,18 @@ export class AnnonceService {
 
   getAnnonces() {
     firebase.database().ref('/annonces')
-      .on('value', (data) => {
-          const test = data.val();
-          this.annonces = data.val() ? data.val() : [];
-          const tet1 = this.annonces[0];
-          this.emitAnnonces();
+      .on('value', (data: DataSnapshot) => {
+          if (data) {
+            data.forEach(child => {
+              if (child.val()) {
+                this.annonces.push(child.val());
+                return false;
+              } else {
+                return true;
+              }
+            });
+            this.emitAnnonces();
+          }
         }
       );
   }

@@ -1,0 +1,13 @@
+<h2>Authentification</h2>
+
+<button class="btn btn-success" *ngIf="!authStatus" (click)="onSignInGoogle()">
+  Google
+</button>
+
+<button class="btn btn-success" *ngIf="!authStatus" (click)="onSignInFacebook()">
+  Facebook
+</button>
+
+<button class="btn btn-success" *ngIf="authStatus" (click)="onSignOut()">
+  Se déconnecter
+</button>

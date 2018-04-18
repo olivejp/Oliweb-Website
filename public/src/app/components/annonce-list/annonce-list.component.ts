@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AnnonceService} from "../annonce-service/annonce-service.component";
+import {AnnonceService} from "../../services/AnnonceService";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 

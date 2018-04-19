@@ -10,7 +10,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {AnnonceElementComponent} from './components/annonce-element/annonce-element.component';
 import {AnnonceService} from "./services/AnnonceService";
 import {UserService} from "./services/UserService";
-import { NotFoundComponent } from './not-found/not-found.component';
+import {NotFoundComponent} from './not-found/not-found.component';
+import {MaterialModule} from "./modules/material.module";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    MaterialModule,
   ],
   providers: [AnnonceService, UserService],
   bootstrap: [AppComponent]

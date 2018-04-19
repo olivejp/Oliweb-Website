@@ -1,8 +1,23 @@
-<div class="btn-group vignette" role="group" aria-label="Basic example">
-  <div *ngIf="annonce" class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{annonce.photos[0]}}" alt="{{annonce.photos[0]}}">
-    <div class="card-body">
-      <p class="card-text">{{annonce.description}}</p>
+<mat-card *ngIf="annonce">
+  <mat-card-header>
+    <div>
+      <mat-card-title>{{annonce.titre}}</mat-card-title>
+      <mat-card-subtitle>{{annonce.utilisateur.email}}</mat-card-subtitle>
     </div>
-  </div>
-</div>
+  </mat-card-header>
+  <img src="{{annonce.photos[0]}}" alt="{{annonce.photos[0]}}">
+  <mat-card-content>
+    <p>{{annonce.description}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button class="mat-button" *ngIf="annonce.contactEmail">
+      <span>EMAIL</span>
+    </button>
+    <button class="mat-button" *ngIf="annonce.contactTel">
+      <span>TELEPHONE</span>
+    </button>
+    <button class="mat-button" *ngIf="annonce.contactMsg">
+      <span>MESSAGE</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

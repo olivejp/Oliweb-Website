@@ -1,12 +1,10 @@
-<div class="row">
-  <div class="col-xs-12">
-    <div class="list-group">
-      <button
-        class="list-group-item"
-        *ngFor="let annonce of annonces; let i = index" (click)="onViewBook(i)">
-        <app-annonce-element [annonce]="annonce"></app-annonce-element>
-      </button>
-    </div>
-    <button class="btn btn-primary" (click)="onNewAnnonce()">Nouvelle annonce</button>
-  </div>
+<button class="btn btn-primary" (click)="onNewAnnonce()">Nouvelle annonce</button>
+<div class="col-xs-12">
+  <mat-grid-list [cols]="4" rowHeight="400px">
+    <mat-grid-tile
+      class="list-group-item"
+      *ngFor="let annonce of annonces; let i = index" (click)="onViewBook(i)">
+      <app-annonce-element [annonce]="annonce"></app-annonce-element>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

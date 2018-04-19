@@ -1,11 +1,13 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Subject} from "rxjs/Subject";
-import DataSnapshot = firebase.database.DataSnapshot;
 import * as firebase from "firebase";
 import {Annonce} from "../domain/annonce.model";
+import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable()
-export class AnnonceService {
+export class AnnonceService implements OnInit {
+  ngOnInit() {
+  }
 
   annonces: Annonce[] = [];
   annoncesSubject = new Subject<any[]>();
@@ -36,7 +38,7 @@ export class AnnonceService {
       );
   }
 
-  getSingleAnnonce(uid: string) : Promise<Annonce> {
+  getSingleAnnonce(uid: string): Promise<Annonce> {
     return new Promise(
       (resolve, reject) => {
         firebase.database().ref('/annonces/' + uid).once('value').then(

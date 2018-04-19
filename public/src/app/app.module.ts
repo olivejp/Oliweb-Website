@@ -12,9 +12,11 @@ import {AnnonceService} from "./services/AnnonceService";
 import {UserService} from "./services/UserService";
 import {NotFoundComponent} from './not-found/not-found.component';
 import {MaterialModule} from "./modules/material.module";
+import {AnnonceCreationComponent} from './components/annonce-creation/annonce-creation.component';
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
+  {path: 'annonces/new', component: AnnonceCreationComponent},
   {path: 'annonces/view/:uid', component: AnnonceElementComponent},
   {path: 'auth', component: UserSignInComponent},
   {path: 'not-found', component: NotFoundComponent},
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     AnnonceListComponent,
     UserSignInComponent,
     AnnonceElementComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AnnonceCreationComponent
   ],
   imports: [
     BrowserModule,

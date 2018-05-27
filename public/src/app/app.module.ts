@@ -9,10 +9,11 @@ import {UserSignInComponent} from './components/user-sign-in/user-sign-in.compon
 import {RouterModule, Routes} from "@angular/router";
 import {AnnonceElementComponent} from './components/annonce-element/annonce-element.component';
 import {AnnonceService} from "./services/AnnonceService";
-import {UserService} from "./services/UserService";
+import {SignInService} from "./services/SignInService";
 import {NotFoundComponent} from './not-found/not-found.component';
 import {MaterialModule} from "./modules/material.module";
 import {AnnonceCreationComponent} from './components/annonce-creation/annonce-creation.component';
+import {UserService} from "./services/UserService";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
@@ -20,8 +21,7 @@ const appRoutes: Routes = [
   {path: 'annonces/view/:uid', component: AnnonceElementComponent},
   {path: 'auth', component: UserSignInComponent},
   {path: 'not-found', component: NotFoundComponent},
-  {path: '**', redirectTo: '/not-found'},
-  {path: '', component: AnnonceListComponent}
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({
@@ -40,7 +40,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MaterialModule,
   ],
-  providers: [AnnonceService, UserService],
+  providers: [AnnonceService, SignInService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

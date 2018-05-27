@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../services/UserService";
 import {Router} from "@angular/router";
+import {SignInService} from "../../services/SignInService";
 
 @Component({
   selector: 'app-user-sign-in',
@@ -9,43 +9,43 @@ import {Router} from "@angular/router";
 })
 export class UserSignInComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private signInService: SignInService, private router: Router) {
   }
 
   authStatus: boolean;
 
   ngOnInit() {
-    this.authStatus = this.userService.isAuth;
+    this.authStatus = this.signInService.isAuth;
   }
 
-  bidule(result: any){
+  bidule(result: any) {
 
   }
 
   onSignInGoogle() {
-    UserService.signInGoogle().then(result => {
+    SignInService.signInGoogle().then(result => {
       const token = result.credential.accessToken;
       const user = result.user;
       this.authStatus = true;
-      this.router.navigate(['annonces'])
+      this.router.navigate(['user'])
     }).catch(reason => {
       const errorCode = reason.code;
     });
   }
 
   onSignInFacebook() {
-    UserService.signInFacebook().then(result => {
+    SignInService.signInFacebook().then(result => {
       const token = result.credential.accessToken;
       const user = result.user;
       this.authStatus = true;
-      this.router.navigate(['annonces'])
+      this.router.navigate(['user'])
     }).catch(reason => {
       const errorCode = reason.code;
     });
   }
 
   onSignOut() {
-    UserService.signOut();
+    SignInService.signOut();
     this.authStatus = false;
   }
 }

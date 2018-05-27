@@ -1,10 +1,8 @@
-<button class="btn btn-primary" (click)="onNewAnnonce()">Nouvelle annonce</button>
-<div class="col-xs-12">
-  <mat-grid-list [cols]="4" rowHeight="400px">
-    <mat-grid-tile
-      class="list-group-item"
-      *ngFor="let annonce of annonces; let i = index" (click)="onViewBook(i)">
-      <app-annonce-element [annonce]="annonce"></app-annonce-element>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+<mat-grid-list cols="4" rowHeight="400px">
+  <mat-grid-tile
+    *ngFor="let annonce of annonces; let i = index" (click)="onViewAnnonce(i)">
+    <app-annonce-element [annonce]="annonce"></app-annonce-element>
+  </mat-grid-tile>
+</mat-grid-list>
+<button mat-fab class="md-bottom-right" color="accent" (click)="onNewAnnonce()"><i class="material-icons">add</i></button>
+

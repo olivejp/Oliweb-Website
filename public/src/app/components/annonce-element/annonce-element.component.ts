@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {AnnonceService} from "../../services/AnnonceService";
 import {Annonce} from "../../domain/annonce.model";
+import {UserService} from "../../services/UserService";
 
 @Component({
   selector: 'app-annonce-element',
@@ -14,10 +15,23 @@ export class AnnonceElementComponent implements OnInit {
 
   @Input()
   annonce: Annonce;
+  userImgSrc: String;
 
-  constructor(private annonceService: AnnonceService, private route: ActivatedRoute) { }
+  constructor(private annonceService: AnnonceService,
+              private userService: UserService,
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.annonceUid = this.route.snapshot.params['uid'];
+    this.getUserImage();
+  }
+
+  getUserImage() {
+    this.userService.getUser(this.annonce.utilisateur.uuid)
+      .then(user => {
+        this.userImgSrc = user.photoUrl;
+      })
+      .catch()
   }
 }

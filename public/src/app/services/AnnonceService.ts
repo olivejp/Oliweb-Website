@@ -24,6 +24,26 @@ export class AnnonceService implements OnInit {
     firebase.database().ref('/annonces')
       .on('value', (data: DataSnapshot) => {
           if (data) {
+            this.annonces = [];
+            data.forEach(child => {
+              if (child.val()) {
+                this.annonces.push(child.val());
+                return false;
+              } else {
+                return true;
+              }
+            });
+            this.emitAnnonces();
+          }
+        }
+      );
+  }
+
+  getAnnoncesListener() {
+    this.annonces = [];
+    firebase.database().ref('/annonces')
+      .on('child', (data: DataSnapshot) => {
+          if (data) {
             data.forEach(child => {
               if (child.val()) {
                 this.annonces.push(child.val());

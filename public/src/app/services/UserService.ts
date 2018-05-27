@@ -1,22 +1,26 @@
+import {Injectable, OnInit} from '@angular/core';
+import {User} from "../domain/user.model";
 import * as firebase from "firebase";
-import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
-export class UserService  {
-
-  isAuth = false;
-
-  constructor() { }
-
-  static signInGoogle(){
-    return firebase.auth().signInWithPopup(new GoogleAuthProvider());
+@Injectable()
+export class UserService implements OnInit {
+  ngOnInit() {
   }
 
-  static signInFacebook(){
-    return firebase.auth().signInWithPopup(new FacebookAuthProvider);
+  constructor() {
   }
 
-  static signOut(){
-    return firebase.auth().signOut();
+  getUser(uidUser: String): Promise<User> {
+    return new Promise(
+      (resolve, reject) => {
+        firebase.database().ref('/users/' + uidUser).once('value').then(
+          (data) => {
+            resolve(data.val());
+          }, (error) => {
+            reject(error);
+          }
+        )
+      }
+    );
   }
 }

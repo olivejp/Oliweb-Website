@@ -27,7 +27,7 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/annonces', 'new']);
   }
 
-  onViewBook(index: number) {
+  onViewAnnonce(index: number) {
     this.router.navigate(['/annonces', 'view', this.annonces[index].uuid]);
   }
 

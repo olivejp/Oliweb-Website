@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AnnonceService} from "../../services/AnnonceService";
+import {Annonce} from "../../domain/annonce.model";
 
 @Component({
   selector: 'app-annonce-creation',
@@ -8,9 +9,23 @@ import {AnnonceService} from "../../services/AnnonceService";
 })
 export class AnnonceCreationComponent implements OnInit {
 
-  constructor(private annonceService: AnnonceService) { }
+  annonce: Annonce;
+  erreur: String;
 
-  ngOnInit() {
+  constructor(private annonceService: AnnonceService) {
   }
 
+  ngOnInit() {
+    this.annonce = new Annonce();
+  }
+
+  saveAnnonce() {
+    AnnonceService.saveAnnonce(this.annonce)
+      .then((data) => {
+        this.erreur = "Tout s'est bien passé";
+      })
+      .catch((reason) => {
+        this.erreur = reason.message;
+      });
+  }
 }

@@ -1,16 +1,18 @@
 <form>
   <mat-form-field style="width: 100%">
-    <input matInput placeholder="Titre" type="text">
+    <input matInput placeholder="Titre" type="text" [(ngModel)]="annonce.titre" name="titre">
   </mat-form-field>
 
   <mat-form-field style="width: 100%">
-    <input matInput placeholder="Description" type="text">
+    <input matInput placeholder="Description" type="text" [(ngModel)]="annonce.description" name="description">
   </mat-form-field>
 
   <mat-form-field style="width: 100%">
-    <input matInput placeholder="Prix" type="number">
+    <input matInput placeholder="Prix" type="number" [(ngModel)]="annonce.prix" name="prix">
   </mat-form-field>
 
-  <button mat-button color="primary">VALIDER</button>
+  <button mat-button color="primary" (click)="saveAnnonce()">VALIDER</button>
+
+  <h4>{{erreur}}</h4>
 
 </form>

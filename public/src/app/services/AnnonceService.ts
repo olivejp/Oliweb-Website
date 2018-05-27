@@ -12,11 +12,18 @@ export class AnnonceService implements OnInit {
   annonces: Annonce[] = [];
   annoncesSubject = new Subject<any[]>();
 
+  errors: String[] = [];
+  errorsSubject = new Subject<any[]>();
+
   constructor() {
   }
 
   emitAnnonces() {
     this.annoncesSubject.next(this.annonces);
+  }
+
+  emitErrors() {
+    this.errorsSubject.next(this.errors);
   }
 
   getAnnonces() {
@@ -37,6 +44,17 @@ export class AnnonceService implements OnInit {
           }
         }
       );
+  }
+
+  static saveAnnonce(annonce: Annonce): Promise<any> {
+    const newPostKey = firebase.database().ref('annonces').push().key;
+    annonce.uuid = newPostKey;
+    return firebase.database().ref("/annonces/" + newPostKey).set(annonce, function (error) {
+      if (error) {
+        this.errors.push(error.message);
+        this.emitErrors();
+      }
+    });
   }
 
   getAnnoncesListener() {

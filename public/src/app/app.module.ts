@@ -14,6 +14,7 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {MaterialModule} from "./modules/material.module";
 import {AnnonceCreationComponent} from './components/annonce-creation/annonce-creation.component';
 import {UserService} from "./services/UserService";
+import {FormsModule} from "@angular/forms";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     AnnonceCreationComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),

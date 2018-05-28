@@ -42,3 +42,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+package-lock.json
+firebase.json
+/public/package.json
+/public/package-lock.json

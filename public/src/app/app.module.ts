@@ -15,11 +15,12 @@ import {MaterialModule} from "./modules/material.module";
 import {AnnonceCreationComponent} from './components/annonce-creation/annonce-creation.component';
 import {UserService} from "./services/UserService";
 import {FormsModule} from "@angular/forms";
+import {AnnonceDetailComponent} from "./components/annonce-detail/annonce-detail.component";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
   {path: 'annonces/new', component: AnnonceCreationComponent},
-  {path: 'annonces/view/:uid', component: AnnonceElementComponent},
+  {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
   {path: 'auth', component: UserSignInComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: '**', redirectTo: '/not-found'}
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
     AnnonceListComponent,
     UserSignInComponent,
     AnnonceElementComponent,
+    AnnonceDetailComponent,
     NotFoundComponent,
     AnnonceCreationComponent
   ],

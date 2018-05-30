@@ -9,6 +9,7 @@ export class AnnonceService implements OnInit {
   ngOnInit() {
   }
 
+  selectedAnnonce: Annonce;
   annonces: Annonce[] = [];
   annoncesSubject = new Subject<any[]>();
 
@@ -24,6 +25,13 @@ export class AnnonceService implements OnInit {
 
   emitErrors() {
     this.errorsSubject.next(this.errors);
+  }
+
+  setSelectedAnnonce(annonce: Annonce) {
+    this.selectedAnnonce = annonce;
+  }
+  getSelectedAnnonce() {
+    return this.selectedAnnonce;
   }
 
   getAnnonces() {

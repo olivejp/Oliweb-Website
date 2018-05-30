@@ -12,6 +12,8 @@ import {Annonce} from "../../domain/annonce.model";
 export class AnnonceListComponent implements OnInit, OnDestroy {
   annonces: Annonce[];
   annoncesSubscription: Subscription;
+  selectedAnnonce: Annonce;
+
   constructor(private annonceService: AnnonceService, private router: Router) {}
 
   ngOnInit() {
@@ -28,10 +30,12 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
   }
 
   onViewAnnonce(index: number) {
+    this.selectedAnnonce = this.annonces[index];
     this.router.navigate(['/annonces', 'view', this.annonces[index].uuid]);
   }
 
   ngOnDestroy() {
     this.annoncesSubscription.unsubscribe();
+    this.annonceService.setSelectedAnnonce(this.selectedAnnonce);
   }
 }

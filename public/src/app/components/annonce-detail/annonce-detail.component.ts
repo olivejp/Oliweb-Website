@@ -1,21 +1,20 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
 import {AnnonceService} from "../../services/AnnonceService";
 import {Annonce} from "../../domain/annonce.model";
 import {UserService} from "../../services/UserService";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-annonce-element',
-  templateUrl: './annonce-element.component.html',
-  styleUrls: ['./annonce-element.component.scss']
+  selector: 'app-annonce-detail',
+  templateUrl: './annonce-detail.component.html',
+  styleUrls: ['./annonce-detail.component.scss']
 })
-export class AnnonceElementComponent implements OnInit {
+export class AnnonceDetailComponent implements OnInit {
 
   annonceUid: string;
-
-  @Input()
   annonce: Annonce;
   userImgSrc: String;
+  uidUserParrain: string;
 
   constructor(private annonceService: AnnonceService,
               private userService: UserService,
@@ -23,8 +22,18 @@ export class AnnonceElementComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams.forEach(value => {
+      if (value.hasOwnProperty("from")) {
+        this.uidUserParrain = value.from;
+      }
+    });
+
     this.annonceUid = this.route.snapshot.params['uid'];
-    this.getUserImage();
+
+    this.annonceService.getSingleAnnonce(this.annonceUid).then(value => {
+      this.annonce = value;
+      this.getUserImage();
+    });
   }
 
   getUserImage() {

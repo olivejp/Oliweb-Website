@@ -18,10 +18,6 @@ export class UserSignInComponent implements OnInit {
     this.authStatus = this.signInService.isAuth;
   }
 
-  bidule(result: any) {
-
-  }
-
   onSignInGoogle() {
     SignInService.signInGoogle().then(result => {
       const token = result.credential.accessToken;

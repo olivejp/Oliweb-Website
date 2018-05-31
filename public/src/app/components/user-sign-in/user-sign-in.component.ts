@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {SignInService} from "../../services/SignInService";
+import {UserService} from "../../services/UserService";
 
 @Component({
   selector: 'app-user-sign-in',
@@ -9,7 +10,9 @@ import {SignInService} from "../../services/SignInService";
 })
 export class UserSignInComponent implements OnInit {
 
-  constructor(private signInService: SignInService, private router: Router) {
+  constructor(private signInService: SignInService,
+              private userService: UserService,
+              private router: Router) {
   }
 
   authStatus: boolean;
@@ -23,7 +26,14 @@ export class UserSignInComponent implements OnInit {
       const token = result.credential.accessToken;
       const user = result.user;
       this.authStatus = true;
-      this.router.navigate(['user'])
+
+      // TODO enregistrer l'utilisateur ICI
+      this.userService.saveUser(user.uid, user.email, user.refreshToken, user.displayName, user.photoURL)
+        .then((data) => {
+          console.log('Insertion utilisateur dans la base successful')
+        });
+
+      this.router.navigate(['annonces'])
     }).catch(reason => {
       const errorCode = reason.code;
     });
@@ -34,7 +44,10 @@ export class UserSignInComponent implements OnInit {
       const token = result.credential.accessToken;
       const user = result.user;
       this.authStatus = true;
-      this.router.navigate(['user'])
+
+      // TODO enregistrer l'utilisateur ICI
+
+      this.router.navigate(['annonces'])
     }).catch(reason => {
       const errorCode = reason.code;
     });

@@ -16,6 +16,8 @@ import {AnnonceCreationComponent} from './components/annonce-creation/annonce-cr
 import {UserService} from "./services/UserService";
 import {FormsModule} from "@angular/forms";
 import {AnnonceDetailComponent} from "./components/annonce-detail/annonce-detail.component";
+import {FirebaseUtilityService} from "./services/FirebaseUtilityService";
+import {CategorieService} from "./services/CategorieService";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
@@ -44,7 +46,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MaterialModule,
   ],
-  providers: [AnnonceService, SignInService, UserService],
+  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

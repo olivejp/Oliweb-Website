@@ -1,4 +1,13 @@
 <form>
+
+  <mat-form-field>
+    <mat-select placeholder="Categorie" [(ngModel)]="annonce.categorie" name="categorie">
+      <mat-option *ngFor="let categorie of categories" [value]="categorie">
+        {{categorie.libelle}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <mat-form-field style="width: 100%">
     <input matInput placeholder="Titre" type="text" [(ngModel)]="annonce.titre" name="titre">
   </mat-form-field>
@@ -10,6 +19,13 @@
   <mat-form-field style="width: 100%">
     <input matInput placeholder="Prix" type="number" [(ngModel)]="annonce.prix" name="prix">
   </mat-form-field>
+
+  <section>
+    <mat-checkbox [checked]="contactTel" (change)="onChangeContactTel()">Par téléphone</mat-checkbox>
+    <mat-checkbox [checked]="contactEmail" (change)="onChangeContactEmail()">Par email</mat-checkbox>
+    <mat-checkbox [checked]="contactMsg" (change)="onChangeContactMsg()">Par message</mat-checkbox>
+  </section>
+
 
   <button mat-button color="primary" (click)="saveAnnonce()">VALIDER</button>
 

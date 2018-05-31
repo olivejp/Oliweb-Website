@@ -2,10 +2,12 @@ import {Injectable, OnInit} from '@angular/core';
 import {Subject} from "rxjs/Subject";
 import * as firebase from "firebase";
 import {Annonce} from "../domain/annonce.model";
+import {FirebaseUtilityService} from "./FirebaseUtilityService";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable()
 export class AnnonceService implements OnInit {
+
   ngOnInit() {
   }
 
@@ -16,7 +18,7 @@ export class AnnonceService implements OnInit {
   errors: String[] = [];
   errorsSubject = new Subject<any[]>();
 
-  constructor() {
+  constructor(private firebaseUtilityService: FirebaseUtilityService) {
   }
 
   emitAnnonces() {
@@ -30,6 +32,7 @@ export class AnnonceService implements OnInit {
   setSelectedAnnonce(annonce: Annonce) {
     this.selectedAnnonce = annonce;
   }
+
   getSelectedAnnonce() {
     return this.selectedAnnonce;
   }
@@ -54,15 +57,29 @@ export class AnnonceService implements OnInit {
       );
   }
 
-  static saveAnnonce(annonce: Annonce): Promise<any> {
-    const newPostKey = firebase.database().ref('annonces').push().key;
-    annonce.uuid = newPostKey;
-    return firebase.database().ref("/annonces/" + newPostKey).set(annonce, function (error) {
-      if (error) {
-        this.errors.push(error.message);
-        this.emitErrors();
-      }
-    });
+  saveAnnonce(annonce: Annonce): Promise<any> {
+    return new Promise((resolve, reject) =>
+      this.firebaseUtilityService.getServerTimestamp()
+        .then(timestamp => {
+          // Récupération d'une nouvelle UID
+          const newPostKey = firebase.database().ref('annonces').push().key;
+
+          // Update de l'annonce (uid & date publication)
+          annonce.datePublication = timestamp;
+          annonce.uuid = newPostKey;
+
+          // Tentative de sauvegarde dans Firebase
+          firebase.database().ref("/annonces/" + newPostKey).set(annonce, function (error) {
+            if (error) {
+              this.errors.push(error.message);
+              this.emitErrors();
+              reject(error);
+            } else {
+              resolve(true);
+            }
+          });
+        })
+    )
   }
 
   getAnnoncesListener() {

@@ -1,8 +1,4 @@
-export class CategorieEmbeded {
-  constructor(public id: number,
-              public libelle: string) {
-  }
-}
+import {Categorie} from "./categorie.model";
 
 export class UtilisateurEmbeded {
   constructor(public email: number,
@@ -20,7 +16,7 @@ export class Annonce {
               public contactMsg?: boolean,
               public contactEmail?: boolean,
               public photos?: string[],
-              public categorie?: CategorieEmbeded,
+              public categorie?: Categorie,
               public utilisateur?: UtilisateurEmbeded) {
   }
 }

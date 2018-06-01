@@ -18,6 +18,7 @@ import {FormsModule} from "@angular/forms";
 import {AnnonceDetailComponent} from "./components/annonce-detail/annonce-detail.component";
 import {FirebaseUtilityService} from "./services/FirebaseUtilityService";
 import {CategorieService} from "./services/CategorieService";
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
     AnnonceElementComponent,
     AnnonceDetailComponent,
     NotFoundComponent,
-    AnnonceCreationComponent
+    AnnonceCreationComponent,
+    NavbarComponent
   ],
   imports: [
     FormsModule,

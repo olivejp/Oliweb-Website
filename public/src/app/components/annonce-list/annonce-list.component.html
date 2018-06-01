@@ -1,4 +1,4 @@
-<mat-grid-list cols="4" rowHeight="400px">
+<mat-grid-list [cols]="colsNumber" rowHeight="400px">
   <mat-grid-tile
     *ngFor="let annonce of annonces; let i = index" (click)="onViewAnnonce(i)">
     <app-annonce-element [annonce]="annonce"></app-annonce-element>

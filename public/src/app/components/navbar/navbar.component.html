@@ -1,0 +1,12 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li routerLinkActive="active"><a routerLink="auth">Authentification</a></li>
+      <li routerLinkActive="active"><a routerLink="annonces">Annonces</a></li>
+    </ul>
+    <div *ngIf="isAuth" align="right">
+      <img class="mat-card-avatar" mat-card-avatar=""
+           [src]="getUserPhotoUrl()">
+    </div>
+  </div>
+</nav>

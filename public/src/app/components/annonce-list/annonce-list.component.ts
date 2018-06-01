@@ -3,6 +3,7 @@ import {AnnonceService} from "../../services/AnnonceService";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {Annonce} from "../../domain/annonce.model";
+import {HostListener} from "@angular/core";
 
 @Component({
   selector: 'app-annonce-list-component',
@@ -14,7 +15,33 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
   annoncesSubscription: Subscription;
   selectedAnnonce: Annonce;
 
-  constructor(private annonceService: AnnonceService, private router: Router) {}
+  screenHeight: number;
+  screenWidth: number;
+
+  colsNumber: number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+
+    if (this.screenWidth > 512) {
+      this.colsNumber = 1;
+    }
+    if (this.screenWidth > 768) {
+      this.colsNumber = 2;
+    }
+    if (this.screenWidth > 1024) {
+      this.colsNumber = 3;
+    }
+    if (this.screenWidth > 1280) {
+      this.colsNumber = 4;
+    }
+  }
+
+  constructor(private annonceService: AnnonceService, private router: Router) {
+    this.onResize()
+  }
 
   ngOnInit() {
     this.annoncesSubscription = this.annonceService.annoncesSubject.subscribe(

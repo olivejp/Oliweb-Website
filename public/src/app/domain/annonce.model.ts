@@ -1,9 +1,10 @@
 import {Categorie} from "./categorie.model";
 
 export class UtilisateurEmbeded {
-  constructor(public email: number,
-              public telephone: string,
-              public uuid: string) {
+  constructor(public email?: string,
+              public profile?: string,
+              public telephone?: string,
+              public uuid?: string) {
   }
 }
 

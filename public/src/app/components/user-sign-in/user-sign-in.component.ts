@@ -21,40 +21,52 @@ export class UserSignInComponent implements OnInit {
     this.authStatus = this.signInService.isAuth;
   }
 
+  getOrCreateUser(user: any) {
+    // Recherche si l'utilisateur existe déjà
+    this.userService.getUser(user.uid)
+      .then((userRead) => {
+        this.signInService.setUserAuth(userRead);
+        this.router.navigate(['annonces']);
+      })
+      .catch((reason) => {
+        // Si l'utilisateur n'existe pas, je le créé
+        this.userService.saveUser(user.uid, user.email, user.refreshToken, user.displayName, user.photoURL)
+          .then((data) => {
+            console.log('Insertion utilisateur dans la base successful');
+            this.router.navigate(['annonces']);
+          })
+          .catch(reason2 => console.error(reason2));
+      });
+  }
+
   onSignInGoogle() {
-    SignInService.signInGoogle().then(result => {
-      const token = result.credential.accessToken;
-      const user = result.user;
-      this.authStatus = true;
-
-      // TODO enregistrer l'utilisateur ICI
-      this.userService.saveUser(user.uid, user.email, user.refreshToken, user.displayName, user.photoURL)
-        .then((data) => {
-          console.log('Insertion utilisateur dans la base successful')
-        });
-
-      this.router.navigate(['annonces'])
-    }).catch(reason => {
-      const errorCode = reason.code;
-    });
+    this.signInService.signInGoogle()
+      .then(result => {
+        const user = result.user;
+        this.authStatus = true;
+        this.getOrCreateUser(user);
+      })
+      .catch(reason => {
+        const errorCode = reason.code;
+        console.error(errorCode);
+      });
   }
 
   onSignInFacebook() {
-    SignInService.signInFacebook().then(result => {
-      const token = result.credential.accessToken;
-      const user = result.user;
-      this.authStatus = true;
-
-      // TODO enregistrer l'utilisateur ICI
-
-      this.router.navigate(['annonces'])
-    }).catch(reason => {
-      const errorCode = reason.code;
-    });
+    this.signInService.signInFacebook()
+      .then(result => {
+        const user = result.user;
+        this.authStatus = true;
+        this.getOrCreateUser(user);
+      })
+      .catch(reason => {
+        const errorCode = reason.code;
+        console.error(errorCode);
+      });
   }
 
   onSignOut() {
-    SignInService.signOut();
+    this.signInService.signOut();
     this.authStatus = false;
   }
 }

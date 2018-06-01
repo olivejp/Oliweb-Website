@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AnnonceService} from "../../services/AnnonceService";
-import {Annonce} from "../../domain/annonce.model";
+import {Annonce, UtilisateurEmbeded} from "../../domain/annonce.model";
 import {CategorieService} from "../../services/CategorieService";
 import {Categorie} from "../../domain/categorie.model";
-import {Subscription} from "rxjs/Subscription";
+import {SignInService} from "../../services/SignInService";
+import {User} from "../../domain/user.model";
 
 @Component({
   selector: 'app-annonce-creation',
@@ -21,11 +22,12 @@ export class AnnonceCreationComponent implements OnInit {
   categories: Categorie[];
 
   constructor(private annonceService: AnnonceService,
-              private categorieService: CategorieService) {
+              private categorieService: CategorieService,
+              private signInService: SignInService) {
   }
 
   ngOnInit() {
-    this.annonce = new Annonce();
+    this.annonce = new Annonce("","","");
     this.annonce.photos = [];
     this.contactEmail = true;
     this.contactTel = true;
@@ -36,18 +38,31 @@ export class AnnonceCreationComponent implements OnInit {
     });
   }
 
+  convertUser(user: User): UtilisateurEmbeded {
+    let utilisateur = new UtilisateurEmbeded();
+    utilisateur.profile = user.profile;
+    utilisateur.uuid = user.uid;
+    utilisateur.email = user.email;
+    utilisateur.telephone = "";
+    return utilisateur;
+  }
 
   saveAnnonce() {
-    this.annonce.contactMsg = this.contactMsg;
-    this.annonce.contactTel = this.contactTel;
-    this.annonce.contactEmail = this.contactEmail;
-    this.annonceService.saveAnnonce(this.annonce)
-      .then((data) => {
-        this.erreur = "Tout s'est bien passé";
-      })
-      .catch((reason) => {
-        this.erreur = reason.message;
-      });
+    if (this.signInService.isAuth) {
+      this.annonce.utilisateur = this.convertUser(this.signInService.getUserAuth());
+      this.annonce.contactMsg = this.contactMsg;
+      this.annonce.contactTel = this.contactTel;
+      this.annonce.contactEmail = this.contactEmail;
+      this.annonceService.saveAnnonce(this.annonce)
+        .then((data) => {
+          this.erreur = "Tout s'est bien passé";
+        })
+        .catch((reason) => {
+          this.erreur = reason.message;
+        });
+    } else {
+      console.log("Impossible d'envoyer des annonces sans être authentifié")
+    }
   }
 
   onChangeContactTel() {

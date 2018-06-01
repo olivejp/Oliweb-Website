@@ -11,6 +11,7 @@ export class SignInService {
   isAuth = false;
   userAuthenticated: User;
   authSubject = new Subject<boolean>();
+  provider: string;
 
   constructor() {
   }
@@ -20,18 +21,33 @@ export class SignInService {
   }
 
   signInGoogle() {
-    return firebase.auth().signInWithPopup(new GoogleAuthProvider());
+    return firebase.auth().signInWithPopup(new GoogleAuthProvider())
+      .then((user) => {
+        this.provider = 'google';
+        return user;
+      });
   }
 
   signInFacebook() {
-    return firebase.auth().signInWithPopup(new FacebookAuthProvider);
+    this.provider = 'facebook';
+    return firebase.auth().signInWithPopup(new FacebookAuthProvider)
+      .then((user) => {
+        this.provider = 'facebook';
+        return user;
+      });
   }
 
-  signOut() {
+  signOut(): Promise<any> {
     this.isAuth = false;
     this.userAuthenticated = null;
     this.emitIsAuth();
-    return firebase.auth().signOut();
+    return firebase.auth().signOut()
+      .then(value => {
+        if (this.provider == 'google') {
+          this.signOutGoogle();
+        }
+      });
+    ;
   }
 
   setUserAuth(user: User) {
@@ -42,5 +58,9 @@ export class SignInService {
 
   getUserAuth(): User {
     return this.userAuthenticated;
+  }
+
+  signOutGoogle() {
+    window.location.assign('https://accounts.google.com/logout');
   }
 }

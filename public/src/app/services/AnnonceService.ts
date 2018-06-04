@@ -1,15 +1,12 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Subject} from "rxjs/Subject";
-import * as firebase from "firebase";
-import {Annonce} from "../domain/annonce.model";
-import {FirebaseUtilityService} from "./FirebaseUtilityService";
+import {Subject} from 'rxjs/Subject';
+import * as firebase from 'firebase';
+import {Annonce} from '../domain/annonce.model';
+import {FirebaseUtilityService} from './FirebaseUtilityService';
 import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable()
 export class AnnonceService implements OnInit {
-
-  ngOnInit() {
-  }
 
   selectedAnnonce: Annonce;
   annonces: Annonce[] = [];
@@ -17,6 +14,9 @@ export class AnnonceService implements OnInit {
 
   errors: String[] = [];
   errorsSubject = new Subject<any[]>();
+
+  ngOnInit() {
+  }
 
   constructor(private firebaseUtilityService: FirebaseUtilityService) {
   }
@@ -69,7 +69,7 @@ export class AnnonceService implements OnInit {
           annonce.uuid = newPostKey;
 
           // Tentative de sauvegarde dans Firebase
-          firebase.database().ref("/annonces/" + newPostKey).set(annonce, function (error) {
+          firebase.database().ref('/annonces/' + newPostKey).set(annonce, function (error) {
             if (error) {
               this.errors.push(error.message);
               this.emitErrors();
@@ -79,7 +79,7 @@ export class AnnonceService implements OnInit {
             }
           });
         })
-    )
+    );
   }
 
   getAnnoncesListener() {

@@ -29,7 +29,6 @@ export class SignInService {
   }
 
   signInFacebook() {
-    this.provider = 'facebook';
     return firebase.auth().signInWithPopup(new FacebookAuthProvider)
       .then((user) => {
         this.provider = 'facebook';

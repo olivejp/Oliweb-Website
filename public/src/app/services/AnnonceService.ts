@@ -67,17 +67,10 @@ export class AnnonceService implements OnInit {
           // Update de l'annonce (uid & date publication)
           annonce.datePublication = timestamp;
           annonce.uuid = newPostKey;
+          annonce.categorie.id = Number(annonce.categorie.id);
 
           // Tentative de sauvegarde dans Firebase
-          firebase.database().ref('/annonces/' + newPostKey).set(annonce, function (error) {
-            if (error) {
-              this.errors.push(error.message);
-              this.emitErrors();
-              reject(error);
-            } else {
-              resolve(true);
-            }
-          });
+          return firebase.database().ref('/annonces/' + newPostKey).set(annonce);
         })
     );
   }

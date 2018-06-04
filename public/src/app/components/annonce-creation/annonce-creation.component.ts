@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AnnonceService} from "../../services/AnnonceService";
-import {Annonce, UtilisateurEmbeded} from "../../domain/annonce.model";
-import {CategorieService} from "../../services/CategorieService";
-import {Categorie} from "../../domain/categorie.model";
-import {SignInService} from "../../services/SignInService";
-import {User} from "../../domain/user.model";
+import {AnnonceService} from '../../services/AnnonceService';
+import {Annonce, UtilisateurEmbeded} from '../../domain/annonce.model';
+import {CategorieService} from '../../services/CategorieService';
+import {Categorie} from '../../domain/categorie.model';
+import {SignInService} from '../../services/SignInService';
+import {User} from '../../domain/user.model';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-annonce-creation',
@@ -23,11 +24,12 @@ export class AnnonceCreationComponent implements OnInit {
 
   constructor(private annonceService: AnnonceService,
               private categorieService: CategorieService,
-              private signInService: SignInService) {
+              private signInService: SignInService,
+              public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.annonce = new Annonce("","","");
+    this.annonce = new Annonce('', '', '');
     this.annonce.photos = [];
     this.contactEmail = true;
     this.contactTel = true;
@@ -39,11 +41,11 @@ export class AnnonceCreationComponent implements OnInit {
   }
 
   convertUser(user: User): UtilisateurEmbeded {
-    let utilisateur = new UtilisateurEmbeded();
+    const utilisateur = new UtilisateurEmbeded();
     utilisateur.profile = user.profile;
     utilisateur.uuid = user.uid;
     utilisateur.email = user.email;
-    utilisateur.telephone = "";
+    utilisateur.telephone = '';
     return utilisateur;
   }
 
@@ -55,13 +57,18 @@ export class AnnonceCreationComponent implements OnInit {
       this.annonce.contactEmail = this.contactEmail;
       this.annonceService.saveAnnonce(this.annonce)
         .then((data) => {
-          this.erreur = "Tout s'est bien passé";
+          this.snackBar.open('SAUVEGARDE RÉUSSI', '', {
+            duration: 2000,
+          });
         })
         .catch((reason) => {
+          this.snackBar.open('SAUVEGARDE ÉCHOUÉE', '', {
+            duration: 2000,
+          });
           this.erreur = reason.message;
         });
     } else {
-      console.log("Impossible d'envoyer des annonces sans être authentifié")
+      console.log('Impossible d\'envoyer des annonces sans être authentifié');
     }
   }
 

@@ -5,7 +5,7 @@
       <li routerLinkActive="active"><a routerLink="annonces">Annonces</a></li>
     </ul>
     <div *ngIf="isAuth" align="right" style="vertical-align: middle">
-      <mat-icon [matBadge]="chatNumber" matBadgeColor="warn" matBadgePosition="above after" style="vertical-align: middle">message</mat-icon>
+      <mat-icon style="vertical-align: middle">message</mat-icon>
       <img class="mat-card-avatar" mat-card-avatar="" [src]="getUserPhotoUrl()" style="vertical-align: middle">
     </div>
   </div>

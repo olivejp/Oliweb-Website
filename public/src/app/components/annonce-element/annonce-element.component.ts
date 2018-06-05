@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {AnnonceService} from "../../services/AnnonceService";
 import {Annonce} from "../../domain/annonce.model";
 import {UserService} from "../../services/UserService";
+import {DateFormatter} from "@angular/common/src/pipes/deprecated/intl";
 
 @Component({
   selector: 'app-annonce-element',
@@ -35,5 +36,9 @@ export class AnnonceElementComponent implements OnInit {
         })
         .catch()
     }
+  }
+
+  getDatePublication(): string {
+    return new Date(this.annonce.datePublication).toLocaleDateString();
   }
 }

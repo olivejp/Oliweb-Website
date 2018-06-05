@@ -34,7 +34,6 @@ export class UserService implements OnInit {
             if (error) {
               console.log(error);
               this.errors.push(error.message);
-              this.emitErrors();
               reject(error);
             } else {
               resolve(true);

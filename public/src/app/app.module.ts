@@ -19,6 +19,7 @@ import {AnnonceDetailComponent} from "./components/annonce-detail/annonce-detail
 import {FirebaseUtilityService} from "./services/FirebaseUtilityService";
 import {CategorieService} from "./services/CategorieService";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NavSearchComponent } from './components/nav-search/nav-search.component';
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
     AnnonceDetailComponent,
     NotFoundComponent,
     AnnonceCreationComponent,
-    NavbarComponent
+    NavbarComponent,
+    NavSearchComponent
   ],
   imports: [
     FormsModule,

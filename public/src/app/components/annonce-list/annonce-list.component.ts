@@ -34,9 +34,6 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
     if (this.screenWidth > 1024) {
       this.colsNumber = 3;
     }
-    if (this.screenWidth > 1280) {
-      this.colsNumber = 4;
-    }
   }
 
   constructor(private annonceService: AnnonceService, private router: Router) {

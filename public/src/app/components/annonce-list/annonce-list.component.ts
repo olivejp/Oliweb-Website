@@ -25,9 +25,8 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
 
-    if (this.screenWidth > 512) {
-      this.colsNumber = 1;
-    }
+    this.colsNumber = 1;
+
     if (this.screenWidth > 768) {
       this.colsNumber = 2;
     }
@@ -37,7 +36,7 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
   }
 
   constructor(private annonceService: AnnonceService, private router: Router) {
-    this.onResize()
+    this.onResize();
   }
 
   ngOnInit() {

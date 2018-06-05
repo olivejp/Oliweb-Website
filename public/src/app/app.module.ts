@@ -20,6 +20,7 @@ import {FirebaseUtilityService} from "./services/FirebaseUtilityService";
 import {CategorieService} from "./services/CategorieService";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NavSearchComponent } from './components/nav-search/nav-search.component';
+import {ChatService} from "./services/ChatService";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
@@ -50,7 +51,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MaterialModule,
   ],
-  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService],
+  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

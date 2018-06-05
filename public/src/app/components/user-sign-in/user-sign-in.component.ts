@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {SignInService} from "../../services/SignInService";
 import {UserService} from "../../services/UserService";
+import {ChatService} from "../../services/ChatService";
 
 @Component({
   selector: 'app-user-sign-in',
@@ -12,6 +13,7 @@ export class UserSignInComponent implements OnInit {
 
   constructor(private signInService: SignInService,
               private userService: UserService,
+              private chatService: ChatService,
               private router: Router) {
   }
 
@@ -31,8 +33,9 @@ export class UserSignInComponent implements OnInit {
       .catch((reason) => {
         // Si l'utilisateur n'existe pas, je le créé
         this.userService.saveUser(user.uid, user.email, user.refreshToken, user.displayName, user.photoURL)
-          .then((data) => {
+          .then((userSaved) => {
             console.log('Insertion utilisateur dans la base successful');
+            this.signInService.setUserAuth(userSaved);
             this.router.navigate(['annonces']);
           })
           .catch(reason2 => console.error(reason2));

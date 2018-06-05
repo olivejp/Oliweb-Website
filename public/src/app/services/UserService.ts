@@ -30,16 +30,16 @@ export class UserService implements OnInit {
           user.dateLastConnexion = timestamp;
 
           // Tentative de sauvegarde dans Firebase
-          firebase.database().ref("/users/" + uidUser).set(user, function (error) {
+          firebase.database().ref('/users/' + uidUser).set(user, function (error) {
             if (error) {
               console.log(error);
               this.errors.push(error.message);
               reject(error);
             } else {
-              resolve(true);
+              resolve(user);
             }
           });
-        })
+        });
     });
   }
 

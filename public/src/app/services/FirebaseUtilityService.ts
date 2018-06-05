@@ -20,8 +20,8 @@ export class FirebaseUtilityService {
           firebase.database().ref('timestamp').child('now').once('value').then(
             (data) => {
               resolve(data.val());
-            }, (error) => {
-              reject(error);
+            }, (error1) => {
+              reject(error1);
             }
           );
         }

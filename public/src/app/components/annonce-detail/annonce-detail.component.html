@@ -4,16 +4,13 @@
     <mat-card-title>{{annonce.titre}}</mat-card-title>
     <mat-card-subtitle>{{annonce.utilisateur.email}}</mat-card-subtitle>
   </mat-card-header>
-  <img *ngIf="annonce && annonce.photos" mat-card-image height="164px" src="{{annonce?.photos[0]}}" alt="{{annonce?.photos[0]}}">
+  <img *ngIf="annonce && annonce.photos" mat-card-image style="max-width: 400px; max-height: 600px" src="{{annonce?.photos[0]}}" alt="{{annonce?.photos[0]}}">
   <mat-card-content>
     <p>{{annonce.description}}</p>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions align="start">
     <button mat-button color="accent" *ngIf="annonce.contactEmail">
       EMAIL
-    </button>
-    <button mat-button color="accent" *ngIf="annonce.contactTel">
-      TELEPHONE
     </button>
     <button mat-button color="accent" *ngIf="annonce.contactMsg">
       MESSAGE

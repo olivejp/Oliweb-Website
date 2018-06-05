@@ -4,9 +4,9 @@
       <li routerLinkActive="active"><a routerLink="auth">Authentification</a></li>
       <li routerLinkActive="active"><a routerLink="annonces">Annonces</a></li>
     </ul>
-    <div *ngIf="isAuth" align="right">
-      <img class="mat-card-avatar" mat-card-avatar=""
-           [src]="getUserPhotoUrl()">
+    <div *ngIf="isAuth" align="right" style="vertical-align: middle">
+      <mat-icon matBadge="22" matBadgePosition="above after" style="vertical-align: middle">message</mat-icon>
+      <img class="mat-card-avatar" mat-card-avatar="" [src]="getUserPhotoUrl()" style="vertical-align: middle">
     </div>
   </div>
 </nav>

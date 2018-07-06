@@ -1,0 +1,10 @@
+**Start local serve**
+Go to the \public
+Type 'ng serve'
+Go to http://localhost:4200
+
+**Deployment process**
+Go to \public
+Type 'ng build'
+Go to the root
+Type 'firebase deploy'

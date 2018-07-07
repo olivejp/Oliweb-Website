@@ -17,6 +17,7 @@ export class Annonce {
               public contactMsg?: boolean,
               public contactEmail?: boolean,
               public photos?: string[],
+              public prix?: number,
               public categorie?: Categorie,
               public utilisateur?: UtilisateurEmbeded) {
   }

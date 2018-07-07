@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
 import {AnnonceService} from "../../services/AnnonceService";
 import {Annonce} from "../../domain/annonce.model";
 import {UserService} from "../../services/UserService";
@@ -18,7 +19,8 @@ export class AnnonceDetailComponent implements OnInit {
 
   constructor(private annonceService: AnnonceService,
               private userService: UserService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private location: Location) {
   }
 
   ngOnInit() {
@@ -44,5 +46,9 @@ export class AnnonceDetailComponent implements OnInit {
         })
         .catch()
     }
+  }
+
+  onBackPressed() {
+    this.location.back(); // <-- go back to previous location on cancel
   }
 }

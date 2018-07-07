@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {Annonce} from "../../domain/annonce.model";
 import {HostListener} from "@angular/core";
+import {SignInService} from "../../services/SignInService";
 
 @Component({
   selector: 'app-annonce-list-component',
@@ -13,12 +14,12 @@ import {HostListener} from "@angular/core";
 export class AnnonceListComponent implements OnInit, OnDestroy {
   annonces: Annonce[];
   annoncesSubscription: Subscription;
+  authSubscription: Subscription;
   selectedAnnonce: Annonce;
-
   screenHeight: number;
   screenWidth: number;
-
   colsNumber: number;
+  isAuth: any;
 
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
@@ -35,7 +36,7 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private annonceService: AnnonceService, private router: Router) {
+  constructor(private annonceService: AnnonceService, private router: Router, private signInService: SignInService) {
     this.onResize();
   }
 
@@ -45,7 +46,13 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
         this.annonces = annonces;
       }
     );
+    this.authSubscription = this.signInService.authSubject.subscribe(
+      (auth: boolean) => {
+        this.isAuth = auth;
+      }
+    );
     this.annonceService.getAnnonces();
+    this.signInService.emitIsAuth();
   }
 
   onNewAnnonce() {
@@ -59,6 +66,7 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.annoncesSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
     this.annonceService.setSelectedAnnonce(this.selectedAnnonce);
   }
 }

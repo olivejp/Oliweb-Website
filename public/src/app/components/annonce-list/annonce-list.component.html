@@ -1,6 +1,6 @@
 <app-nav-search></app-nav-search>
 <button mat-fab class="md-bottom-right" color="accent" (click)="onNewAnnonce()" *ngIf="isAuth"><i class="material-icons">add</i></button>
-<mat-grid-list [cols]="colsNumber" rowHeight="450px">
+<mat-grid-list style="margin-top: 2%" [cols]="colsNumber" rowHeight="450px">
   <mat-grid-tile
     *ngFor="let annonce of annonces; let i = index" (click)="onViewAnnonce(i)">
     <app-annonce-element [annonce]="annonce"></app-annonce-element>

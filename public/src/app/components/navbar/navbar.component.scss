@@ -4,4 +4,16 @@
   overflow: hidden;
   width: 32px;
   height: 32px;
+  vertical-align: middle;
+}
+
+.app-toolbar {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+.flex-spacer {
+  flex-grow: 1;
 }

@@ -1,13 +1,17 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import * as firebase from "firebase";
+import {MediaMatcher} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor() {
+export class AppComponent implements OnDestroy {
+
+  mobileQuery: MediaQueryList;
+
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     const config = {
       apiKey: "AIzaSyBaYYt7PxiZp7NBqphpLyRnrLgDrBMnZHA",
       authDomain: "oliweb-ec245.firebaseapp.com",
@@ -19,5 +23,13 @@ export class AppComponent {
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     }
+
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 }

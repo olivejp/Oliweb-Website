@@ -1,12 +1,12 @@
-<nav class="navbar navbar-default fixed-top">
-  <div class="container-fluid">
-    <ul class="nav navbar-nav">
-      <li routerLinkActive="active"><a routerLink="auth">Authentification</a></li>
-      <li routerLinkActive="active"><a routerLink="annonces">Annonces</a></li>
-    </ul>
-    <div *ngIf="isAuth" align="right" style="vertical-align: middle">
-      <mat-icon style="vertical-align: middle">message</mat-icon>
-      <img class="mat-card-avatar oliweb-avatar" mat-card-avatar="" [src]="getUserPhotoUrl()" style="vertical-align: middle" [matTooltip]="getUserProfile()">
-    </div>
-  </div>
-</nav>
+<mat-toolbar color="primary" role="heading" class="app-toolbar">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="toggleSideNav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Oliweb</h1>
+    <div class="flex-spacer"></div>
+    <img *ngIf="isAuth" class="mat-card-avatar oliweb-avatar" mat-card-avatar=""
+         [src]="getUserPhotoUrl()"
+         [matTooltip]="getUserProfile()">
+  </mat-toolbar-row>
+</mat-toolbar>

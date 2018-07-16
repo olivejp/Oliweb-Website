@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SignInService} from "../../services/SignInService";
 import {Subscription} from "rxjs/Subscription";
 import {ChatService} from "../../services/ChatService";
@@ -9,6 +9,8 @@ import {ChatService} from "../../services/ChatService";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
+  @Output() toggleClicked = new EventEmitter<>();
 
   isAuth: boolean;
 
@@ -44,5 +46,9 @@ export class NavbarComponent implements OnInit {
     if (this.isAuth) {
       return this.signInService.getUserAuth().profile;
     }
+  }
+
+  toggleSideNav() {
+    this.toggleClicked.emit(null);
   }
 }

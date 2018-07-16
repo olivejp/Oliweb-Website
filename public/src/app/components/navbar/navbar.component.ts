@@ -11,6 +11,7 @@ import {ChatService} from "../../services/ChatService";
 export class NavbarComponent implements OnInit {
 
   isAuth: boolean;
+
   isAuthSubscription: Subscription;
 
   chatNumber: number;
@@ -25,8 +26,7 @@ export class NavbarComponent implements OnInit {
         this.isAuth = isAuth;
         if (this.isAuth) {
           // Recherche des chats pour cette utilisateur
-          const uidUser: string = this.signInService.getUserAuth().uid;
-          this.chatService.getChatsByUidUser(uidUser)
+          this.chatService.getChatsByUidUser(this.signInService.getUserAuth().uid)
             .then(value => this.chatNumber = value.length)
             .catch(reason => console.error(reason));
         }
@@ -37,6 +37,12 @@ export class NavbarComponent implements OnInit {
   getUserPhotoUrl(): string {
     if (this.isAuth) {
       return this.signInService.getUserAuth().photoUrl;
+    }
+  }
+
+  getUserProfile(): string {
+    if (this.isAuth) {
+      return this.signInService.getUserAuth().profile;
     }
   }
 }

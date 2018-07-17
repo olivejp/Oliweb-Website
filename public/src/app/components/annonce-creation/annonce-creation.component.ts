@@ -6,6 +6,7 @@ import {Categorie} from '../../domain/categorie.model';
 import {SignInService} from '../../services/SignInService';
 import {User} from '../../domain/user.model';
 import {MatSnackBar} from '@angular/material';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-annonce-creation',
@@ -25,7 +26,8 @@ export class AnnonceCreationComponent implements OnInit {
   constructor(private annonceService: AnnonceService,
               private categorieService: CategorieService,
               private signInService: SignInService,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -40,7 +42,11 @@ export class AnnonceCreationComponent implements OnInit {
     });
   }
 
-  convertUser(user: User): UtilisateurEmbeded {
+  convertUser(user
+                :
+                User
+  ):
+    UtilisateurEmbeded {
     const utilisateur = new UtilisateurEmbeded();
     utilisateur.profile = user.profile;
     utilisateur.uuid = user.uid;

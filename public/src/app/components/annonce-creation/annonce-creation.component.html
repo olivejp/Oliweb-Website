@@ -1,41 +1,47 @@
-<form>
-  <p>
-    <mat-form-field>
-      <mat-select placeholder="Categorie" [(ngModel)]="annonce.categorie" name="categorie" style="font-size: x-large">
-        <mat-option *ngFor="let categorie of categories" [value]="categorie" >
-          {{categorie.libelle}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field style="width: 100%">
-      <input matInput placeholder="Titre" type="text" style="font-size: x-large" [(ngModel)]="annonce.titre" name="titre" maxlength="256">
-      <mat-hint align="start"><strong>Entrez ici le titre de votre annonce</strong></mat-hint>
-      <mat-hint align="end">{{annonce.titre.length}} / 256</mat-hint>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field style="width: 100%">
-      <textarea matInput placeholder="Description" type="text" style="font-size: x-large" [(ngModel)]="annonce.description" name="description"
+<div style="flex-grow: 1; padding: 20px 50px 50px 20px">
+  <form>
+    <p>
+      <mat-form-field>
+        <mat-select placeholder="Categorie" [(ngModel)]="annonce.categorie" name="categorie">
+          <mat-option *ngFor="let categorie of categories" [value]="categorie">
+            {{categorie.libelle}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field style="width: 100%">
+        <input matInput placeholder="Titre" type="text" [(ngModel)]="annonce.titre"
+               name="titre" maxlength="256">
+        <mat-hint align="start"><strong>Entrez ici le titre de votre annonce</strong></mat-hint>
+        <mat-hint align="end">{{annonce.titre.length}} / 256</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field style="width: 100%">
+      <textarea matInput placeholder="Description" type="text"
+                [(ngModel)]="annonce.description" name="description"
                 maxlength="1000"></textarea>
-      <mat-hint align="end">{{annonce.description.length}} / 1000</mat-hint>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field style="width: 100%">
-      <input matInput placeholder="Prix" type="number" style="font-size: x-large" [(ngModel)]="annonce.prix" name="prix">
-    </mat-form-field>
-  </p>
-  <section>
-    <mat-checkbox [checked]="contactTel" (change)="onChangeContactTel()">Par téléphone</mat-checkbox>
-    <mat-checkbox [checked]="contactEmail" (change)="onChangeContactEmail()">Par email</mat-checkbox>
-    <mat-checkbox [checked]="contactMsg" (change)="onChangeContactMsg()">Par message</mat-checkbox>
-  </section>
+        <mat-hint align="end">{{annonce.description.length}} / 1000</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field style="width: 100%">
+        <input matInput placeholder="Prix" type="number" [(ngModel)]="annonce.prix"
+               name="prix">
+      </mat-form-field>
+    </p>
+    <section>
+      <mat-checkbox [checked]="contactTel" (change)="onChangeContactTel()">Par téléphone</mat-checkbox>
+      <mat-checkbox [checked]="contactEmail" (change)="onChangeContactEmail()">Par email</mat-checkbox>
+      <mat-checkbox [checked]="contactMsg" (change)="onChangeContactMsg()">Par message</mat-checkbox>
+    </section>
 
 
-  <button mat-button color="primary" (click)="saveAnnonce()">VALIDER</button>
+    <button mat-raised-button color="primary" (click)="saveAnnonce()">VALIDER</button>
+    <button mat-raised-button color="warn" (click)="goBack()">ANNULER</button>
 
-  <h4>{{erreur}}</h4>
+    <h4>{{erreur}}</h4>
 
-</form>
+  </form>
+</div>

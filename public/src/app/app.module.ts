@@ -21,9 +21,12 @@ import {CategorieService} from "./services/CategorieService";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NavSearchComponent } from './components/nav-search/nav-search.component';
 import {ChatService} from "./services/ChatService";
+import {SearchRequestService} from "./services/SearchRequestService";
+import { AnnonceListSearchComponent } from './components/annonce-list-search/annonce-list-search.component';
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListComponent},
+  {path: 'annonces/search/:query', component: AnnonceListSearchComponent},
   {path: 'annonces/new', component: AnnonceCreationComponent},
   {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
   {path: 'auth', component: UserSignInComponent},
@@ -42,7 +45,8 @@ const appRoutes: Routes = [
     NotFoundComponent,
     AnnonceCreationComponent,
     NavbarComponent,
-    NavSearchComponent
+    NavSearchComponent,
+    AnnonceListSearchComponent
   ],
   imports: [
     FormsModule,
@@ -51,7 +55,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MaterialModule,
   ],
-  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService],
+  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

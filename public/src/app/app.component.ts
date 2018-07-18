@@ -10,6 +10,7 @@ import {MediaMatcher} from "@angular/cdk/layout";
 export class AppComponent implements OnDestroy {
 
   mobileQuery: MediaQueryList;
+  _mobileQueryListener: MediaQueryListListener;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     const config = {

@@ -10,7 +10,7 @@ import {ChatService} from "../../services/ChatService";
 })
 export class NavbarComponent implements OnInit {
 
-  @Output() toggleClicked = new EventEmitter<>();
+  @Output() toggleClicked = new EventEmitter<Object>();
 
   isAuth: boolean;
 

@@ -29,10 +29,10 @@ export class AnnonceListComponent implements OnInit, OnDestroy {
     this.colsNumber = 1;
 
     if (this.screenWidth > 768) {
-      this.colsNumber = 2;
+      this.colsNumber = 3;
     }
     if (this.screenWidth > 1024) {
-      this.colsNumber = 3;
+      this.colsNumber = 4;
     }
   }
 

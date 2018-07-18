@@ -1,0 +1,14 @@
+<div style="flex-grow: 1; padding: 20px 50px 50px 20px">
+  <app-nav-search></app-nav-search>
+  <mat-grid-list style="margin-top: 2%" [cols]="colsNumber" rowHeight="450px">
+    <mat-grid-tile
+      *ngFor="let annonce of annonces; let i = index" (click)="onViewAnnonce(i)">
+      <app-annonce-element [annonce]="annonce"></app-annonce-element>
+    </mat-grid-tile>
+    <div style="position : fixed;bottom: 5rem;right: 5rem" *ngIf="isAuth">
+      <button mat-fab color="accent" (click)="onNewAnnonce()">
+        <i class="material-icons">add</i>
+      </button>
+    </div>
+  </mat-grid-list>
+</div>

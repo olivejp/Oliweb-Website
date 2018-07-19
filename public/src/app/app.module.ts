@@ -23,9 +23,10 @@ import { NavSearchComponent } from './components/nav-search/nav-search.component
 import {ChatService} from "./services/ChatService";
 import {SearchRequestService} from "./services/SearchRequestService";
 import { AnnonceListSearchComponent } from './components/annonce-list-search/annonce-list-search.component';
+import { AnnonceListContainerComponent } from './components/annonce-list-container/annonce-list-container.component';
 
 const appRoutes: Routes = [
-  {path: 'annonces', component: AnnonceListComponent},
+  {path: 'annonces', component: AnnonceListContainerComponent},
   {path: 'annonces/search/:query', component: AnnonceListSearchComponent},
   {path: 'annonces/new', component: AnnonceCreationComponent},
   {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     AnnonceCreationComponent,
     NavbarComponent,
     NavSearchComponent,
-    AnnonceListSearchComponent
+    AnnonceListSearchComponent,
+    AnnonceListContainerComponent
   ],
   imports: [
     FormsModule,

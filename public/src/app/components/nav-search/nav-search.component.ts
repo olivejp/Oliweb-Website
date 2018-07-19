@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {SearchRequestService} from "../../services/SearchRequestService";
-import {Router} from "@angular/router";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-nav-search',
@@ -11,13 +9,16 @@ export class NavSearchComponent implements OnInit {
 
   query: string;
 
-  constructor(private searchRequestService: SearchRequestService, private router: Router) { }
+  @Output() searchClicked = new EventEmitter<string>();
+
+  constructor() {
+  }
 
   ngOnInit() {
     this.query = '';
   }
 
-  sendRequest(){
-    this.router.navigate(['/annonces', 'search', this.query]);
+  searchHasBeenClicked() {
+    this.searchClicked.emit(this.query);
   }
 }

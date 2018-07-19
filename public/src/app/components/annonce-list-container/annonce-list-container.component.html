@@ -1,0 +1,9 @@
+<div style="flex-grow: 1; padding: 20px 50px 50px 20px">
+  <app-nav-search (searchClicked)="launchSearch($event)"></app-nav-search>
+  <app-annonce-list-search [annoncesListSearch]="annonces"></app-annonce-list-search>
+  <div style="position : fixed;bottom: 5rem;right: 5rem" *ngIf="isAuth">
+    <button mat-fab color="accent" (click)="onNewAnnonce()">
+      <i class="material-icons">add</i>
+    </button>
+  </div>
+</div>

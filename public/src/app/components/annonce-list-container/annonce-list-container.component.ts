@@ -7,6 +7,10 @@ import {Subscription} from "rxjs/Subscription";
 import * as firebase from "firebase";
 import {SearchRequestService} from "../../services/SearchRequestService";
 
+export interface Source {
+  _source: Annonce;
+}
+
 @Component({
   selector: 'app-annonce-list-container',
   templateUrl: './annonce-list-container.component.html',
@@ -80,7 +84,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
         if (request.hasChild('no_results') || request.hasChild('results')) {
 
           if (request.hasChild('results')) {
-            let tableau: Object[] = request.child('results').val();
+            let tableau: Source[] = request.child('results').val();
             for (let source of tableau) {
               let annonce: Annonce = source._source;
               this.annonces.push(annonce);

@@ -11,6 +11,8 @@ export class AnnonceListSearchComponent {
 
   @Input() annoncesListSearch: Annonce[];
 
+  @Input() isLoading: boolean;
+
   screenHeight: number;
   screenWidth: number;
   colsNumber: number;

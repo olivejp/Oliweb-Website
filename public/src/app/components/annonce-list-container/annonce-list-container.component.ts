@@ -25,6 +25,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   screenWidth: number;
   colsNumber: number;
   isAuth: any;
+  isLoading: boolean;
 
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
@@ -49,8 +50,10 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.annoncesSubscription = this.annonceService.annoncesSubject.subscribe(
       (annonces: any[]) => {
+        this.isLoading = false;
         this.annonces = annonces;
       }
     );
@@ -78,6 +81,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
     if (query != null && query != undefined && query != '') {
       let requestKey = this.searchRequestService.saveRequest(1, 25, query, 'ASC');
 
+      this.isLoading = true;
       console.debug(requestKey);
 
       firebase.database().ref('/requests/' + requestKey).on('value', request => {
@@ -90,6 +94,8 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
               this.annonces.push(annonce);
             }
           }
+
+          this.isLoading = false;
 
           firebase.database().ref('/requests/' + requestKey).remove();
         }

@@ -26,11 +26,13 @@ export class SearchRequestService implements OnInit {
           "fields": ["titre", "description"]
         }
       },
-      "sort": [{
-        "datePublication": {
+      "sort": [
+        { "datePublication": {
           "order": order
         }
-      }]
+      },
+        "_score"
+      ]
     };
 
     // Tentative de sauvegarde dans Firebase

@@ -100,7 +100,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   launchSearch(query: string) {
     this.annonces = [];
     if (query != null && query != undefined && query != '') {
-      let requestKey = this.searchRequestService.saveRequest(1, 25, query, 'ASC');
+      let requestKey = this.searchRequestService.saveRequest(0, 10, query, 'ASC');
 
       this.isLoading = true;
       this.openDialog();

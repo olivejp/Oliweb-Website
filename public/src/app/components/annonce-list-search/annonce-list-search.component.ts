@@ -1,6 +1,8 @@
 import {Component, HostListener, Input} from '@angular/core';
 import {Annonce} from "../../domain/annonce.model";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material";
+import {LoadingDialogComponent} from "../loading-dialog/loading-dialog.component";
 
 @Component({
   selector: 'app-annonce-list-search',
@@ -35,6 +37,8 @@ export class AnnonceListSearchComponent {
   constructor(private router: Router) {
     this.onResize();
   }
+
+
 
   onViewAnnonce(index: number) {
     this.router.navigate(['/annonces', 'view', this.annoncesListSearch[index].uuid]);

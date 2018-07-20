@@ -1,14 +1,8 @@
 <div *ngIf="!isLoading" style="flex-grow: 1; padding: 20px 50px 50px 20px">
-  <mat-grid-list style="margin-top: 2%" [cols]="colsNumber" rowHeight="450px">
+  <mat-grid-list [cols]="colsNumber" rowHeight="450px">
     <mat-grid-tile
       *ngFor="let annonce of annoncesListSearch; let i = index" (click)="onViewAnnonce(i)">
       <app-annonce-element [annonce]="annonce"></app-annonce-element>
     </mat-grid-tile>
   </mat-grid-list>
-</div>
-<div *ngIf="isLoading" style="width:10px; vertical-align: bottom;margin:0 auto;">
-  <mat-progress-spinner
-    color="primary"
-    mode="indeterminate">
-  </mat-progress-spinner>
 </div>

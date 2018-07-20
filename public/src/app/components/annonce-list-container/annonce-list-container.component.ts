@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import * as firebase from "firebase";
 import {SearchRequestService} from "../../services/SearchRequestService";
+import {LoadingDialogComponent} from "../loading-dialog/loading-dialog.component";
+import {MatDialog, MatDialogRef} from "@angular/material";
 
 export interface Source {
   _source: Annonce;
@@ -26,6 +28,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   colsNumber: number;
   isAuth: any;
   isLoading: boolean;
+  dialogRef: MatDialogRef<LoadingDialogComponent>;
 
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
@@ -45,15 +48,18 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   constructor(private annonceService: AnnonceService,
               private searchRequestService: SearchRequestService,
               private router: Router,
-              private signInService: SignInService) {
+              private signInService: SignInService,
+              public dialog: MatDialog) {
     this.onResize();
   }
 
   ngOnInit() {
     this.isLoading = true;
+    this.openDialog();
     this.annoncesSubscription = this.annonceService.annoncesSubject.subscribe(
       (annonces: any[]) => {
         this.isLoading = false;
+        this.closeDialog();
         this.annonces = annonces;
       }
     );
@@ -64,6 +70,21 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
     );
     this.annonceService.getAnnonces();
     this.signInService.emitIsAuth();
+  }
+
+  openDialog() {
+    this.dialogRef = this.dialog.open(LoadingDialogComponent, {
+      width: 'auto',
+      height: 'auto'
+    });
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  closeDialog() {
+    this.dialogRef.close(null);
   }
 
   onNewAnnonce() {
@@ -82,6 +103,8 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
       let requestKey = this.searchRequestService.saveRequest(1, 25, query, 'ASC');
 
       this.isLoading = true;
+      this.openDialog();
+
       console.debug(requestKey);
 
       firebase.database().ref('/requests/' + requestKey).on('value', request => {
@@ -96,6 +119,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
           }
 
           this.isLoading = false;
+          this.closeDialog();
 
           firebase.database().ref('/requests/' + requestKey).remove();
         }

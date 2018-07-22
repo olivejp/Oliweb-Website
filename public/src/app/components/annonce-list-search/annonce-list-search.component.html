@@ -1,5 +1,5 @@
 <div *ngIf="!isLoading" style="flex-grow: 1; padding: 20px 50px 50px 20px">
-  <mat-grid-list [cols]="colsNumber" rowHeight="450px">
+  <mat-grid-list [cols]="colsNumber" rowHeight="400px">
     <mat-grid-tile
       *ngFor="let annonce of annoncesListSearch; let i = index" (click)="onViewAnnonce(i)">
       <app-annonce-element [annonce]="annonce"></app-annonce-element>

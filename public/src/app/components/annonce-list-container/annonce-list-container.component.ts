@@ -73,6 +73,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   }
 
   openDialog() {
+    this.isLoading = true;
     this.dialogRef = this.dialog.open(LoadingDialogComponent, {
       width: 'auto',
       height: 'auto'
@@ -84,6 +85,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   }
 
   closeDialog() {
+    this.isLoading = false;
     this.dialogRef.close(null);
   }
 
@@ -99,33 +101,31 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
 
   launchSearch(query: string) {
     this.annonces = [];
+    this.openDialog();
     if (query != null && query != undefined && query != '') {
-      let requestKey = this.searchRequestService.saveRequest(0, 10, query, 'ASC');
-
-      this.isLoading = true;
-      this.openDialog();
-
-      console.debug(requestKey);
-
-      firebase.database().ref('/requests/' + requestKey).on('value', request => {
-        if (request.hasChild('no_results') || request.hasChild('results')) {
-
-          if (request.hasChild('results')) {
-            let tableau: Source[] = request.child('results').val();
-            for (let source of tableau) {
-              let annonce: Annonce = source._source;
-              this.annonces.push(annonce);
-            }
-          }
-
-          this.isLoading = false;
+      this.searchRequestService.saveRequest(query)
+        .catch(reason => {
+          console.error(reason);
           this.closeDialog();
-
-          firebase.database().ref('/requests/' + requestKey).remove();
-        }
-      });
+        })
+        .then(requestKey => {
+          firebase.database().ref('/requests/' + requestKey).on('value', request => {
+            if (request.hasChild('no_results') || request.hasChild('results')) {
+              if (request.hasChild('results')) {
+                let tableau: Source[] = request.child('results').val();
+                for (let source of tableau) {
+                  let annonce: Annonce = source._source;
+                  this.annonces.push(annonce);
+                }
+              }
+              this.closeDialog();
+              firebase.database().ref('/requests/' + requestKey).remove().catch(reason => console.error(reason));
+            }
+          });
+        });
     } else {
       this.annonceService.getAnnonces();
+      this.closeDialog();
     }
   }
 }

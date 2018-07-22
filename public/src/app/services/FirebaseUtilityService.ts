@@ -1,8 +1,5 @@
-import {Injectable, OnInit} from '@angular/core';
-import {Subject} from "rxjs/Subject";
 import * as firebase from "firebase";
-import {Annonce} from "../domain/annonce.model";
-import DataSnapshot = firebase.database.DataSnapshot;
+import {Injectable} from '@angular/core';
 import ServerValue = firebase.database.ServerValue;
 
 @Injectable()

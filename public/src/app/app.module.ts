@@ -25,6 +25,7 @@ import {SearchRequestService} from "./services/SearchRequestService";
 import { AnnonceListSearchComponent } from './components/annonce-list-search/annonce-list-search.component';
 import { AnnonceListContainerComponent } from './components/annonce-list-container/annonce-list-container.component';
 import { LoadingDialogComponent } from './components/loading-dialog/loading-dialog.component';
+import { RulesComponent } from './components/rules/rules.component';
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
   {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
   {path: 'auth', component: UserSignInComponent},
   {path: 'not-found', component: NotFoundComponent},
+  {path: 'rules', component: RulesComponent},
   {path: '**', redirectTo: '/not-found'}
 ];
 
@@ -50,7 +52,8 @@ const appRoutes: Routes = [
     NavSearchComponent,
     AnnonceListSearchComponent,
     AnnonceListContainerComponent,
-    LoadingDialogComponent
+    LoadingDialogComponent,
+    RulesComponent
   ],
   entryComponents:[
     LoadingDialogComponent

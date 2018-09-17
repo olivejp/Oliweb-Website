@@ -1,28 +1,12 @@
-.card-title {
-  font-size: 1.4em;
-  font-weight: 400;
-  margin-bottom: 6px;
+.card {
+  cursor: pointer;
 }
 
-.card-subtitle {
-  font-size: 0.9em;
-  font-weight: 300;
-  font-style: italic;
-  margin-bottom: 8px;
+.zoom {
+  transition: transform .2s;
+  margin: 0 auto;
 }
 
-.card-button {
-  font-size: 1em;
-  font-weight: 600;
-}
-
-.mat-card {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-}
-
-.mat-card-content {
-  display: flex;
-  flex: 1;
+.zoom:hover {
+  transform: scale(1.07);
 }

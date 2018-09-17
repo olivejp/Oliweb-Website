@@ -36,6 +36,6 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserName() {
-    return this.signInService.getUserAuth().profile;
+    return (this.signInService.isAuth) ? this.signInService.getUserAuth().profile : null;
   }
 }

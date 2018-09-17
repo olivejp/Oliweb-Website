@@ -1,42 +1,42 @@
-import {Component, HostListener, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Annonce} from "../../domain/annonce.model";
-import {Router} from "@angular/router";
+import {LoggerService} from "../../services/LoggerService";
+import {AnnonceService} from "../../services/AnnonceService";
+import {IPagedResults} from "../../shared/interface";
 
 @Component({
   selector: 'app-annonce-list-search',
   templateUrl: './annonce-list-search.component.html',
   styleUrls: ['./annonce-list-search.component.scss']
 })
-export class AnnonceListSearchComponent {
+export class AnnonceListSearchComponent implements OnInit {
 
-  @Input() annoncesListSearch: Annonce[];
+  @Input() annonces: Annonce[];
 
   @Input() isLoading: boolean;
 
-  screenHeight: number;
-  screenWidth: number;
-  colsNumber: number;
+  pageSize = 4;
+  totalRecords = 0;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event?) {
-    this.screenHeight = window.innerHeight;
-    this.screenWidth = window.innerWidth;
-
-    this.colsNumber = 1;
-
-    if (this.screenWidth > 768) {
-      this.colsNumber = 3;
-    }
-    if (this.screenWidth > 1024) {
-      this.colsNumber = 4;
-    }
+  constructor(private annonceService: AnnonceService,
+              private logger: LoggerService) {
   }
 
-  constructor(private router: Router) {
-    this.onResize();
+  ngOnInit() {
+    this.getAnnoncesPage(1);
   }
 
-  onViewAnnonce(index: number) {
-    this.router.navigate(['/annonces', 'view', this.annoncesListSearch[index].uuid]);
+  getAnnoncesPage(page: number) {
+    this.annonceService.getAnnoncesPage((page - 1) * this.pageSize, this.pageSize)
+      .subscribe((response: IPagedResults<Annonce[]>) => {
+          this.annonces = response.results;
+          this.totalRecords = response.totalRecords;
+        },
+        (err: any) => this.logger.log(err),
+        () => this.logger.log('getAnnoncesPage() retrieved annonces for page: ' + page));
+  }
+
+  pageChanged(page: number) {
+    this.getAnnoncesPage(page);
   }
 }

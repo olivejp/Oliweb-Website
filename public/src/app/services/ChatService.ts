@@ -1,10 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Subject} from "rxjs/Subject";
 import * as firebase from "firebase";
-import {Annonce} from "../domain/annonce.model";
-import {FirebaseUtilityService} from "./FirebaseUtilityService";
-import DataSnapshot = firebase.database.DataSnapshot;
 import {Chat} from '../domain/chat.model';
+import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable()
 export class ChatService implements OnInit {

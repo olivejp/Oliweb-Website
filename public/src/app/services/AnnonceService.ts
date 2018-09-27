@@ -1,4 +1,3 @@
-
 import {Annonce} from '../domain/annonce.model';
 import {FirebaseUtilityService} from './FirebaseUtilityService';
 import {Observable, Subject} from "rxjs";
@@ -125,19 +124,14 @@ export class AnnonceService implements OnInit {
    */
   getAnnoncesCount(): Observable<number> {
     return Observable.create(observer => {
-      firebase.database().ref('/annonces').on('child', datasnapshot => {
+      firebase.database().ref('/annonces').on('value', datasnapshot => {
         observer.next(datasnapshot.numChildren());
       })
     });
   }
 
 // TODO finir cette méthode pour l'instant mockée
-  getAnnoncesPerPage(page
-                       :
-                       number, pageSize
-                       :
-                       number
-  ):
+  getAnnoncesPerPage(page: number, pageSize: number):
     Observable<Annonce[]> {
     return Observable.create(observer => {
       firebase.database().ref('/annonces')

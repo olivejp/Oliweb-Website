@@ -26,6 +26,8 @@ import { AnnonceListSearchComponent } from './components/annonce-list-search/ann
 import { AnnonceListContainerComponent } from './components/annonce-list-container/annonce-list-container.component';
 import { LoadingDialogComponent } from './components/loading-dialog/loading-dialog.component';
 import { RulesComponent } from './components/rules/rules.component';
+import { PaginationModule } from './shared/pagination/pagination.module';
+import {LoggerService} from "./services/LoggerService";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},
@@ -59,13 +61,14 @@ const appRoutes: Routes = [
     LoadingDialogComponent
   ],
   imports: [
+    PaginationModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
     MaterialModule,
   ],
-  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService],
+  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

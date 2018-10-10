@@ -18,15 +18,15 @@ import {FormsModule} from "@angular/forms";
 import {AnnonceDetailComponent} from "./components/annonce-detail/annonce-detail.component";
 import {FirebaseUtilityService} from "./services/FirebaseUtilityService";
 import {CategorieService} from "./services/CategorieService";
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { NavSearchComponent } from './components/nav-search/nav-search.component';
+import {NavbarComponent} from './components/navbar/navbar.component';
+import {NavSearchComponent} from './components/nav-search/nav-search.component';
 import {ChatService} from "./services/ChatService";
 import {SearchRequestService} from "./services/SearchRequestService";
-import { AnnonceListSearchComponent } from './components/annonce-list-search/annonce-list-search.component';
-import { AnnonceListContainerComponent } from './components/annonce-list-container/annonce-list-container.component';
-import { LoadingDialogComponent } from './components/loading-dialog/loading-dialog.component';
-import { RulesComponent } from './components/rules/rules.component';
-import { PaginationModule } from './shared/pagination/pagination.module';
+import {AnnonceListSearchComponent} from './components/annonce-list-search/annonce-list-search.component';
+import {AnnonceListContainerComponent} from './components/annonce-list-container/annonce-list-container.component';
+import {LoadingDialogComponent} from './components/loading-dialog/loading-dialog.component';
+import {RulesComponent} from './components/rules/rules.component';
+import {PaginationModule} from './shared/pagination/pagination.module';
 import {LoggerService} from "./services/LoggerService";
 
 const appRoutes: Routes = [
@@ -34,10 +34,11 @@ const appRoutes: Routes = [
   {path: 'annonces/search/:query', component: AnnonceListSearchComponent},
   {path: 'annonces/new', component: AnnonceCreationComponent},
   {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
-  {path: 'auth', component: UserSignInComponent},
+  {path: 'login', component: UserSignInComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'rules', component: RulesComponent},
-  {path: '**', redirectTo: '/not-found'}
+  {path: '', redirectTo: '/annonces', pathMatch: 'full'},
+  {path: '**', redirectTo: '/not-found'},
 ];
 
 @NgModule({
@@ -57,7 +58,7 @@ const appRoutes: Routes = [
     LoadingDialogComponent,
     RulesComponent
   ],
-  entryComponents:[
+  entryComponents: [
     LoadingDialogComponent
   ],
   imports: [
@@ -65,7 +66,7 @@ const appRoutes: Routes = [
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {useHash: true}),
     MaterialModule,
   ],
   providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService],

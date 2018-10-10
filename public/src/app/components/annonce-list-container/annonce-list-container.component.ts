@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SignInService} from "../../services/SignInService";
 import {Annonce} from "../../domain/annonce.model";
 import {AnnonceService} from "../../services/AnnonceService";
@@ -23,34 +23,15 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   annoncesSubscription: Subscription;
   authSubscription: Subscription;
   selectedAnnonce: Annonce;
-  screenHeight: number;
-  screenWidth: number;
-  colsNumber: number;
   isAuth: any;
   isLoading: boolean;
   dialogRef: MatDialogRef<LoadingDialogComponent>;
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event?) {
-    this.screenHeight = window.innerHeight;
-    this.screenWidth = window.innerWidth;
-
-    this.colsNumber = 1;
-
-    if (this.screenWidth > 768) {
-      this.colsNumber = 3;
-    }
-    if (this.screenWidth > 1024) {
-      this.colsNumber = 4;
-    }
-  }
 
   constructor(private annonceService: AnnonceService,
               private searchRequestService: SearchRequestService,
               private router: Router,
               private signInService: SignInService,
               public dialog: MatDialog) {
-    this.onResize();
   }
 
   ngOnInit() {
@@ -87,10 +68,6 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   closeDialog() {
     this.isLoading = false;
     this.dialogRef.close(null);
-  }
-
-  onNewAnnonce() {
-    this.router.navigate(['/annonces', 'new']);
   }
 
   ngOnDestroy() {

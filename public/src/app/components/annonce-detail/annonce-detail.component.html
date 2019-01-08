@@ -1,20 +1,52 @@
-<button mat-fab class="md-bottom-right" color="accent" (click)="onBackPressed()"><i class="material-icons">arrow_back</i></button>
-<mat-card *ngIf="annonce">
-  <mat-card-header>
-    <img mat-card-avatar [src]="userImgSrc"/>
-    <mat-card-title>{{annonce.titre}}</mat-card-title>
-    <mat-card-subtitle>{{annonce.utilisateur.email}}</mat-card-subtitle>
-  </mat-card-header>
-  <img *ngIf="annonce && annonce.photos" mat-card-image style="max-width: 400px; max-height: 600px" src="{{annonce?.photos[0]}}" alt="{{annonce?.photos[0]}}">
-  <mat-card-content>
-    <p>{{annonce.description}}</p>
-  </mat-card-content>
-  <mat-card-actions align="start">
-    <button mat-button color="accent" *ngIf="annonce.contactEmail">
+<button type="button" class="btn btn-primary btn-circle" (click)="onBackPressed()"><i class="fas fa-chevron-left"></i></button>
+<div class="card" *ngIf="annonce">
+
+  <!--<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">-->
+    <!--<div class="carousel-inner">-->
+      <!--<div class="carousel-item" *ngFor="let photoUrl of annonce.photos">-->
+        <!--<img class="d-block w-100" src="{{photoUrl}}">-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">-->
+      <!--<span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+      <!--<span class="sr-only">Previous</span>-->
+    <!--</a>-->
+    <!--<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">-->
+      <!--<span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+      <!--<span class="sr-only">Next</span>-->
+    <!--</a>-->
+  <!--</div>-->
+
+
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li *ngFor="let photoUrl of annonce.photos; let indexes = indexes" data-target="#carouselExampleIndicators" data-slide-to="0" [ngClass]="{'active':indexes == 0}"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div *ngFor="let photoUrl of annonce.photos; let index = index" class="carousel-item" [ngClass]="{'active':index == 0}" >
+        <img class="d-block w-100" src="{{photoUrl}}" alt="{{photoUrl}}">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+
+
+  <div class="card-body">
+    <h5 class="card-title">{{annonce.titre}}</h5>
+    <p class="card-text">{{annonce.description}}</p>
+    <button class="btn btn-primary btn-lg" *ngIf="annonce.contactEmail">
       EMAIL
     </button>
-    <button mat-button color="accent" *ngIf="annonce.contactMsg">
+    <button class="btn btn-primary btn-lg" *ngIf="annonce.contactMsg">
       MESSAGE
     </button>
-  </mat-card-actions>
-</mat-card>
+  </div>
+</div>

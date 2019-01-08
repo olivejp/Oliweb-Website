@@ -1,23 +1,27 @@
 <div class="row">
   <div class="col-md-12">
-    <nav class="navbar navbar-wrapper navbar-expand-lg navbar-fixed-top fixed-top navbar-dark bg-dark">
-      <div class="col-md-12">
-        <a class="navbar-brand" routerLink="/annonces">
-          OLIWEB
-        </a>
-        <form class="form-inline col-md-7 my-2 my-lg-0 mr-sm-2 navbar" (ngSubmit)="search()">
-          <div class="input-group col-md-12">
-            <input type="text" class="form-control" [(ngModel)]="keyword" name="keyword" placeholder="Mots clés"
-                   aria-label="Mots clés"
-                   aria-describedby="button-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-primary btn-outline-secondary" type="submit" id="button-addon2"><span
-                class="fas fa-search"></span>Rechercher
-              </button>
-            </div>
-          </div>
-        </form>
-        <div class="d-flex ml-auto pull-right">
+    <nav class="navbar navbar-expand-lg navbar-fixed-top fixed-top navbar-dark bg-dark">
+      <a class="navbar-brand" routerLink="/annonces">
+        OLIWEB
+      </a>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!--<div class="navbar-nav"></div>-->
+        <!-- Barre de recherche -->
+        <!--<form class="navbar-nav form-inline" (ngSubmit)="search()">-->
+          <!--<div class="input-group mb-3">-->
+            <!--<input type="text" class="form-control" [(ngModel)]="keyword" name="keyword" placeholder="Mots clés"-->
+                   <!--aria-label="Mots clés"-->
+                   <!--aria-describedby="button-addon2">-->
+            <!--<div class="input-group-append">-->
+              <!--<button class="btn btn-primary btn-outline-secondary" type="submit" id="button-addon2"><span-->
+                <!--class="fas fa-search"></span>Rechercher-->
+              <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</form>-->
+
+        <div class="navbar-nav navbar-right mr-lg-2">
           <button [hidden]="!isUserAuth()" class="btn btn-outline-success ml-2 mr-2" type="button"
                   routerLink="/annonces/new"><span
             class="fas fa-plus fa-lg"></span> Ajouter annonce

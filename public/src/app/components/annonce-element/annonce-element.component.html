@@ -1,19 +1,17 @@
-<mat-card *ngIf="annonce" style="width: 350px; max-height: 400px">
-  <img *ngIf="annonce && annonce.photos" mat-card-image style="width: inherit" height="250px"
-       src="{{annonce?.photos[0]}}" alt="assets/ic_launcher_round.png">
-  <img *ngIf="!annonce || !annonce.photos" mat-card-image style="width: inherit" height="250px"
-       src="assets/ic_launcher_round.png">
-  <mat-card-header>
-    <img mat-card-avatar [src]="userImgSrc"/>
-    <mat-card-title class="card-title">{{annonce.titre}}</mat-card-title>
-    <mat-card-subtitle class="card-subtitle">Posté le {{getDatePublication()}}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-actions align="start">
-    <button mat-button color="accent" *ngIf="annonce.contactEmail" class="card-button">
-      EMAIL
+<div class="card card-inverse zoom" (click)="goToDetail()">
+  <img class="card-img-top" src="{{getPhotoUrl()}}" alt="Photo Annonce">
+  <div class="card-img-overlay">
+    <button class="btn btn-default btn-circle" type="button">
+      <span class="fas fa-user fa-lg" data-toggle="tooltip" data-placement="bottom" title="Vendeur"></span>
     </button>
-    <button mat-button color="accent" *ngIf="annonce.contactMsg" class="card-button">
-      MESSAGE
-    </button>
-  </mat-card-actions>
-</mat-card>
+  </div>
+  <div class="card-footer">
+    <h4 class="card-title" style="color: gray">{{annonce.titre}}</h4>
+    <div>
+      <h5>{{annonce.prix}} XPF</h5>
+    </div>
+    <div>
+      <p style="font-style: italic">{{annonce.datePublication | date:'dd/MM/yy'}}</p>
+    </div>
+  </div>
+</div>

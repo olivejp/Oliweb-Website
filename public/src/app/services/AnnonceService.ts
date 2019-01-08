@@ -1,9 +1,10 @@
-import {Injectable, OnInit} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
-import * as firebase from 'firebase';
 import {Annonce} from '../domain/annonce.model';
 import {FirebaseUtilityService} from './FirebaseUtilityService';
+import {Observable, Subject} from "rxjs";
+import {PagedResults} from "../domain/paged.model";
+import {Injectable, OnInit} from "@angular/core";
 import DataSnapshot = firebase.database.DataSnapshot;
+import * as firebase from "firebase";
 
 @Injectable()
 export class AnnonceService implements OnInit {
@@ -106,5 +107,49 @@ export class AnnonceService implements OnInit {
         );
       }
     );
+  }
+
+  getAnnoncesPage(page: number, pageSize: number): Observable<PagedResults<Annonce>> {
+    return Observable.create(observer => {
+      this.getAnnoncesCount().subscribe(count => {
+        this.getAnnoncesPerPage(page, pageSize).subscribe(annonces => {
+          observer.next(new PagedResults<Annonce>(annonces, count));
+        }, error2 => observer.error(error2))
+      }, error1 => observer.error(error1));
+    });
+  }
+
+  /**
+   * Get the total count of annonce in firebase database
+   */
+  getAnnoncesCount(): Observable<number> {
+    return Observable.create(observer => {
+      firebase.database().ref('/annonces').on('value', datasnapshot => {
+        observer.next(datasnapshot.numChildren());
+      })
+    });
+  }
+
+// TODO finir cette méthode pour l'instant mockée
+  getAnnoncesPerPage(page: number, pageSize: number):
+    Observable<Annonce[]> {
+    return Observable.create(observer => {
+      firebase.database().ref('/annonces')
+        .on('value', (data: DataSnapshot) => {
+            const annonces = [];
+            if (data) {
+              data.forEach(child => {
+                if (child.val()) {
+                  annonces.push(child.val());
+                  return false;
+                } else {
+                  return true;
+                }
+              });
+            }
+            observer.next(annonces)
+          }
+        );
+    });
   }
 }

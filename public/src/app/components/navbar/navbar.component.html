@@ -1,12 +1,35 @@
-<mat-toolbar color="primary" role="heading" class="app-toolbar">
-  <mat-toolbar-row>
-    <button mat-icon-button (click)="toggleSideNav()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <h1>Oliweb</h1>
-    <div class="flex-spacer"></div>
-    <img *ngIf="isAuth" class="mat-card-avatar oliweb-avatar" mat-card-avatar=""
-         [src]="getUserPhotoUrl()"
-         [matTooltip]="getUserProfile()">
-  </mat-toolbar-row>
-</mat-toolbar>
+<div class="row">
+  <div class="col-md-12">
+    <nav class="navbar navbar-wrapper navbar-expand-lg navbar-fixed-top fixed-top navbar-dark bg-dark">
+      <div class="col-md-12">
+        <a class="navbar-brand" routerLink="/annonces">
+          OLIWEB
+        </a>
+        <form class="form-inline col-md-7 my-2 my-lg-0 mr-sm-2 navbar" (ngSubmit)="search()">
+          <div class="input-group col-md-12">
+            <input type="text" class="form-control" [(ngModel)]="keyword" name="keyword" placeholder="Mots clés"
+                   aria-label="Mots clés"
+                   aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-primary btn-outline-secondary" type="submit" id="button-addon2"><span
+                class="fas fa-search"></span>Rechercher
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="d-flex ml-auto pull-right">
+          <button [hidden]="!isUserAuth()" class="btn btn-outline-success ml-2 mr-2" type="button"
+                  routerLink="/annonces/new"><span
+            class="fas fa-plus fa-lg"></span> Ajouter annonce
+          </button>
+          <button [hidden]="isUserAuth()" class="btn btn-primary btn-circle" type="button" routerLink="/login"><span
+            class="fas fa-user fa-lg"
+            data-toggle="tooltip" data-placement="bottom" title="S'authentifier"></span></button>
+          <button [hidden]="!isUserAuth()" class="btn btn-danger btn-circle" type="button" (click)="signOut()"><span
+            class="fas fa-user fa-lg"
+            data-toggle="tooltip" data-placement="bottom" title="{{getUserName()}}"></span></button>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>

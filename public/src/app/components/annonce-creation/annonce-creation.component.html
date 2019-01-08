@@ -1,14 +1,15 @@
 <div style="flex-grow: 1; padding: 20px 50px 50px 20px">
   <form>
-    <p>
-      <mat-form-field>
-        <mat-select placeholder="Categorie" [(ngModel)]="annonce.categorie" name="categorie">
-          <mat-option *ngFor="let categorie of categories" [value]="categorie">
-            {{categorie.libelle}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </p>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="true">
+        Catégorie
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li *ngFor="let categorie of categories" [value]="categorie">{{categorie.libelle}}</li>
+      </ul>
+    </div>
     <p>
       <mat-form-field style="width: 100%">
         <input matInput placeholder="Titre" type="text" [(ngModel)]="annonce.titre"

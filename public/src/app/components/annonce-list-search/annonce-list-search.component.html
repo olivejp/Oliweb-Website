@@ -1,8 +1,16 @@
-<div *ngIf="!isLoading" style="flex-grow: 1; padding: 20px 50px 50px 20px">
-  <mat-grid-list [cols]="colsNumber" rowHeight="400px">
-    <mat-grid-tile
-      *ngFor="let annonce of annoncesListSearch; let i = index" (click)="onViewAnnonce(i)">
-      <app-annonce-element [annonce]="annonce"></app-annonce-element>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="row h-100 justify-content-center align-items-center">
+  <div *ngIf="annonces" class="col-md-10">
+    <h2 class="mt-3 mb-3" style="text-align: center">Annonces les plus récentes</h2>
+    <div class="row card-container">
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-5" *ngFor="let annonce of annonces">
+        <app-annonce-element [annonce]="annonce"></app-annonce-element>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!annonces">
+    <h2 class="mt-3 mb-3" style="text-align: center">Aucune annonce à montrer</h2>
+  </div>
+</div>
+<div class="row justify-content-center align-items-center">
+  <app-pagination [totalItems]="totalRecords" [pageSize]="pageSize" (pageChanged)="pageChanged($event)"></app-pagination>
 </div>

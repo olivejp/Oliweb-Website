@@ -1,9 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {AnnonceService} from "../../services/AnnonceService";
+import {Router} from "@angular/router";
 import {Annonce} from "../../domain/annonce.model";
-import {UserService} from "../../services/UserService";
-import {DateFormatter} from "@angular/common/src/pipes/deprecated/intl";
 
 @Component({
   selector: 'app-annonce-element',
@@ -12,33 +9,19 @@ import {DateFormatter} from "@angular/common/src/pipes/deprecated/intl";
 })
 export class AnnonceElementComponent implements OnInit {
 
-  annonceUid: string;
+  constructor(private router: Router) { }
 
   @Input()
   annonce: Annonce;
-  userImgSrc: String;
-
-  constructor(private annonceService: AnnonceService,
-              private userService: UserService,
-              private route: ActivatedRoute) {
-  }
 
   ngOnInit() {
-    this.annonceUid = this.route.snapshot.params['uid'];
-    this.getUserImage();
   }
 
-  getUserImage() {
-    if (this.annonce && this.annonce.utilisateur) {
-      this.userService.getUser(this.annonce.utilisateur.uuid)
-        .then(user => {
-          this.userImgSrc = user.photoUrl;
-        })
-        .catch()
-    }
+  getPhotoUrl() {
+    return (this.annonce.photos && this.annonce.photos[0].length > 0) ? this.annonce.photos[0] : "assets/test.svg";
   }
 
-  getDatePublication(): string {
-    return new Date(this.annonce.datePublication).toLocaleDateString();
+  goToDetail() {
+    this.router.navigate(["/annonces/view", this.annonce.uuid])
   }
 }

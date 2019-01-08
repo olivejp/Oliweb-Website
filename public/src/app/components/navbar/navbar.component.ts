@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SignInService} from "../../services/SignInService";
-import {Subscription} from "rxjs/Subscription";
-import {ChatService} from "../../services/ChatService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -10,45 +9,33 @@ import {ChatService} from "../../services/ChatService";
 })
 export class NavbarComponent implements OnInit {
 
-  @Output() toggleClicked = new EventEmitter<Object>();
+  private keyword: string;
 
-  isAuth: boolean;
-
-  isAuthSubscription: Subscription;
-
-  chatNumber: number;
-
-  constructor(private signInService: SignInService,
-              private chatService: ChatService) {
+  constructor(private router: Router,
+              private signInService: SignInService) {
+    this.keyword = '';
   }
 
   ngOnInit() {
-    this.isAuthSubscription = this.signInService.authSubject.subscribe(
-      (isAuth: boolean) => {
-        this.isAuth = isAuth;
-        if (this.isAuth) {
-          // Recherche des chats pour cette utilisateur
-          this.chatService.getChatsByUidUser(this.signInService.getUserAuth().uid)
-            .then(value => this.chatNumber = value.length)
-            .catch(reason => console.error(reason));
-        }
-      }
-    );
   }
 
-  getUserPhotoUrl(): string {
-    if (this.isAuth) {
-      return this.signInService.getUserAuth().photoUrl;
+  isUserAuth() {
+    return this.signInService.isAuth;
+  }
+
+  signOut() {
+    this.signInService.signOut();
+  }
+
+  search() {
+    if (this.keyword && this.keyword.length > 0) {
+      this.router.navigate(['/search', {keyword: this.keyword}]);
+    } else {
+      this.router.navigate(['/annonces']);
     }
   }
 
-  getUserProfile(): string {
-    if (this.isAuth) {
-      return this.signInService.getUserAuth().profile;
-    }
-  }
-
-  toggleSideNav() {
-    this.toggleClicked.emit(null);
+  getUserName() {
+    return (this.signInService.isAuth) ? this.signInService.getUserAuth().profile : null;
   }
 }

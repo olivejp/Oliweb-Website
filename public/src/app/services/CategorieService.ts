@@ -1,10 +1,8 @@
 import {Injectable, OnInit} from '@angular/core';
-import {User} from "../domain/user.model";
 import * as firebase from "firebase";
 import {Categorie} from "../domain/categorie.model";
 import {Subject} from "rxjs/Subject";
 import DataSnapshot = firebase.database.DataSnapshot;
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable()
 export class CategorieService implements OnInit {

@@ -2,12 +2,10 @@
   <form>
     <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="true">
-        Catégorie
-        <span class="caret"></span>
+              aria-haspopup="true" aria-expanded="true">Catégorie
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li *ngFor="let categorie of categories" [value]="categorie">{{categorie.libelle}}</li>
+        <li *ngFor="let categorie of categories" [value]="categorie"><a href="#">{{categorie.libelle}}</a></li>
       </ul>
     </div>
     <p>

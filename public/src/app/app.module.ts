@@ -31,7 +31,7 @@ import {LoggerService} from "./services/LoggerService";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},
-  {path: 'annonces/search/:query', component: AnnonceListSearchComponent},
+  {path: 'annonces/search/:keyword', component: AnnonceListSearchComponent},
   {path: 'annonces/new', component: AnnonceCreationComponent},
   {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
   {path: 'login', component: UserSignInComponent},

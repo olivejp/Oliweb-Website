@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
 
   search() {
     if (this.keyword && this.keyword.length > 0) {
-      this.router.navigate(['/search', {keyword: this.keyword}]);
+      this.router.navigate(['/annonces/search', this.keyword]);
     } else {
       this.router.navigate(['/annonces']);
     }

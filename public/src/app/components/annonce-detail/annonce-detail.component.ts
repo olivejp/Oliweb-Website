@@ -49,6 +49,6 @@ export class AnnonceDetailComponent implements OnInit {
   }
 
   onBackPressed() {
-    this.location.back(); // <-- go back to previous location on cancel
+    this.location.back();
   }
 }

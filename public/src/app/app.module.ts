@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AboutComponent} from './about/about.component';
-import {AnnonceListComponent} from './components/annonce-list/annonce-list.component';
 import {UserSignInComponent} from './components/user-sign-in/user-sign-in.component';
 import {RouterModule, Routes} from "@angular/router";
 import {AnnonceElementComponent} from './components/annonce-element/annonce-element.component';
@@ -31,7 +30,7 @@ import {LoggerService} from "./services/LoggerService";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},
-  {path: 'annonces/search/:query', component: AnnonceListSearchComponent},
+  {path: 'annonces/search/:keyword', component: AnnonceListSearchComponent},
   {path: 'annonces/new', component: AnnonceCreationComponent},
   {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
   {path: 'login', component: UserSignInComponent},
@@ -45,7 +44,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     AboutComponent,
-    AnnonceListComponent,
     UserSignInComponent,
     AnnonceElementComponent,
     AnnonceDetailComponent,

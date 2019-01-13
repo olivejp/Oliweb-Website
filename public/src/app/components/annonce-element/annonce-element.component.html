@@ -1,17 +1,15 @@
 <div class="card card-inverse zoom" (click)="goToDetail()">
-  <img class="card-img-top" src="{{getPhotoUrl()}}" alt="Photo Annonce">
+  <img class="card-img-top" src="{{getPhotoUrl()}}" alt="Photo Annonce" height="200px">
   <div class="card-img-overlay">
-    <button class="btn btn-default btn-circle" type="button">
-      <span class="fas fa-user fa-lg" data-toggle="tooltip" data-placement="bottom" title="Vendeur"></span>
-    </button>
+    <img *ngIf="userPhotoUrl" class="card-img-overlay rounded-img" src="{{userPhotoUrl}}" width="60px" height="60px">
   </div>
-  <div class="card-footer">
+  <div class="card-body">
     <h4 class="card-title" style="color: gray">{{annonce.titre}}</h4>
     <div>
-      <h5>{{annonce.prix}} XPF</h5>
+      <h5 class="price">{{annonce.prix}} XPF</h5>
     </div>
     <div>
-      <p style="font-style: italic">{{annonce.datePublication | date:'dd/MM/yy'}}</p>
+      <p>Posté le {{annonce.datePublication | date:'dd/MM/yy à HH:mm'}}</p>
     </div>
   </div>
 </div>

@@ -3,6 +3,8 @@ import {Annonce} from "../../domain/annonce.model";
 import {LoggerService} from "../../services/LoggerService";
 import {AnnonceService} from "../../services/AnnonceService";
 import {IPagedResults} from "../../shared/interface";
+import {ActivatedRoute, Router} from "@angular/router";
+import {SearchRequestService} from "../../services/SearchRequestService";
 
 @Component({
   selector: 'app-annonce-list-search',
@@ -19,11 +21,35 @@ export class AnnonceListSearchComponent implements OnInit {
   totalRecords = 0;
 
   constructor(private annonceService: AnnonceService,
-              private logger: LoggerService) {
+              private logger: LoggerService,
+              private searchService: SearchRequestService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.getAnnoncesPage(1);
+    this.isLoading = true;
+    this.route.paramMap.subscribe(paramMap => {
+      let keyword = paramMap.get('keyword');
+      if (keyword) {
+        this.launchSearch(keyword);
+      }
+    })
+  }
+
+  launchSearch(keyword: string) {
+    this.searchService.launchSearch(keyword)
+      .then(resultEs => {
+        this.annonces = [];
+        for (let annonceEs of resultEs.hits) {
+          this.annonces.push(annonceEs._source);
+        }
+        this.isLoading = false;
+      })
+      .catch(reason => {
+        console.error(reason);
+        this.isLoading = false;
+      });
   }
 
   getAnnoncesPage(page: number) {

@@ -9,10 +9,6 @@ import {SearchRequestService} from "../../services/SearchRequestService";
 import {LoadingDialogComponent} from "../loading-dialog/loading-dialog.component";
 import {MatDialog, MatDialogRef} from "@angular/material";
 
-export interface Source {
-  _source: Annonce;
-}
-
 @Component({
   selector: 'app-annonce-list-container',
   templateUrl: './annonce-list-container.component.html',
@@ -20,7 +16,6 @@ export interface Source {
 })
 export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   annonces: Annonce[];
-  annoncesSubscription: Subscription;
   authSubscription: Subscription;
   selectedAnnonce: Annonce;
   isAuth: any;
@@ -37,19 +32,25 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.openDialog();
-    this.annoncesSubscription = this.annonceService.annoncesSubject.subscribe(
-      (annonces: any[]) => {
-        this.isLoading = false;
+    this.searchRequestService.launchSearch()
+      .then(resultEs => {
+        this.annonces = [];
+        for (let annonceEs of resultEs.hits) {
+          this.annonces.push(annonceEs._source);
+        }
         this.closeDialog();
-        this.annonces = annonces;
-      }
-    );
+      })
+      .catch(reason => {
+        console.error(reason);
+        this.closeDialog();
+      });
+
     this.authSubscription = this.signInService.authSubject.subscribe(
       (auth: boolean) => {
         this.isAuth = auth;
       }
     );
-    this.annonceService.getAnnonces();
+    // this.annonceService.getAnnonces();
     this.signInService.emitIsAuth();
   }
 
@@ -71,38 +72,7 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.annoncesSubscription.unsubscribe();
     this.authSubscription.unsubscribe();
     this.annonceService.setSelectedAnnonce(this.selectedAnnonce);
-  }
-
-  launchSearch(query: string) {
-    this.annonces = [];
-    this.openDialog();
-    if (query != null && query != undefined && query != '') {
-      this.searchRequestService.saveRequest(query)
-        .catch(reason => {
-          console.error(reason);
-          this.closeDialog();
-        })
-        .then(requestKey => {
-          firebase.database().ref('/requests/' + requestKey).on('value', request => {
-            if (request.hasChild('no_results') || request.hasChild('results')) {
-              if (request.hasChild('results')) {
-                let tableau: Source[] = request.child('results').val();
-                for (let source of tableau) {
-                  let annonce: Annonce = source._source;
-                  this.annonces.push(annonce);
-                }
-              }
-              this.closeDialog();
-              firebase.database().ref('/requests/' + requestKey).remove().catch(reason => console.error(reason));
-            }
-          });
-        });
-    } else {
-      this.annonceService.getAnnonces();
-      this.closeDialog();
-    }
   }
 }

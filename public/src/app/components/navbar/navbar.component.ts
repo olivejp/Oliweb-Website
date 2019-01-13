@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SignInService} from "../../services/SignInService";
 import {Router} from "@angular/router";
+import {UserService} from "../../services/UserService";
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,8 @@ export class NavbarComponent implements OnInit {
   private keyword: string;
 
   constructor(private router: Router,
-              private signInService: SignInService) {
+              private signInService: SignInService,
+              private userService: UserService) {
     this.keyword = '';
   }
 
@@ -37,5 +39,9 @@ export class NavbarComponent implements OnInit {
 
   getUserName() {
     return (this.signInService.isAuth) ? this.signInService.getUserAuth().profile : null;
+  }
+
+  getPhotoVendeurUrl() {
+    return this.signInService.isAuth ? this.signInService.getUserAuth().photoUrl : null;
   }
 }

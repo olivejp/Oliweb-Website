@@ -31,14 +31,16 @@ export class AnnonceListSearchComponent implements OnInit {
     this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       let keyword = paramMap.get('keyword');
-      this.annonces = [];
-      this.launchSearch(keyword);
+      if (keyword) {
+        this.launchSearch(keyword);
+      }
     })
   }
 
   launchSearch(keyword: string) {
     this.searchService.launchSearch(keyword)
       .then(resultEs => {
+        this.annonces = [];
         for (let annonceEs of resultEs.hits) {
           this.annonces.push(annonceEs._source);
         }

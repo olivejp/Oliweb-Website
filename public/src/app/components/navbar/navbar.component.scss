@@ -24,3 +24,13 @@
   background-color: #ff7043;
   border-color: #ff2a36;
 }
+
+@media (max-width: 767px) {
+  .content-to-hide {
+    display: none;
+  }
+}
+
+.rounded-img {
+  border-radius: 50%;
+}

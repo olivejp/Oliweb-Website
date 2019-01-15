@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
   }
 
   isUserAuth() {
+    // return true;
     return this.signInService.isAuth;
   }
 

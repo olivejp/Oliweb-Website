@@ -6,3 +6,14 @@
   bottom: 0; /* Sets the sticky toolbar to be on top */
   z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
 }
+.custom-jumbotron {
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  height: 75vh;
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/oliweb-ec245.appspot.com/o/website%2Fclothing_leather_wooden.jpg?alt=media&token=c9201ff7-a17e-4155-8695-c411f95ec06f)
+}

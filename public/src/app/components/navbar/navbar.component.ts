@@ -10,7 +10,7 @@ import {UserService} from "../../services/UserService";
 })
 export class NavbarComponent implements OnInit {
 
-  private keyword: string;
+  keyword: string;
 
   constructor(private router: Router,
               private signInService: SignInService,

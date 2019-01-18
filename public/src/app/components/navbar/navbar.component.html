@@ -1,92 +1,71 @@
-<!--<nav class="navbar navbar-expand-xl navbar-fixed-top fixed-top navbar-light bg-light">-->
-<!--<a class="navbar-brand order-md-first content-to-hide" routerLink="/annonces">-->
-<!--OLIWEB-->
-<!--</a>-->
-<!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
-<!--aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--<span class="navbar-toggler-icon"></span>-->
-<!--</button>-->
+<div class="row">
+  <div class="col-md-12 pr-0 pl-0">
+    <nav class="navbar navbar-wrapper navbar-expand-lg navbar-fixed-top fixed-top navbar-light light">
+      <div class="container">
+        <div class="col-md-2">
+          <a class="navbar-brand" routerLink="/annonces"
+             style="text-align: justify-all; font-family: 'Gloria Hallelujah', cursive; font-size: 35px; color: #ff7043; font-weight: bold">
+            Oliweb</a>
+        </div>
+        <div class="col-md-10">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="row">
+              <div class="col-1">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0" [hidden]="!isUserAuth()">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false"> Mes informations </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">Mes annonces</a>
+                      <a class="dropdown-item" href="#">Mes conversations</a>
+                    </div>
+                  </li>
+                </ul>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              </div>
+              <div class="col-7">
+                <form class="form-inline" (ngSubmit)="search()">
+                  <div class="input-group col-12">
+                    <input type="text" class="form-control" [(ngModel)]="keyword" name="keyword"
+                           placeholder="Rechercher"
+                           aria-label="Mots clés"
+                           aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-accent btn-outline-secondary" type="submit" id="button-addon2"><span
+                        class="fas fa-search"></span></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-4">
+                <button [disabled]="!isUserAuth()" [hidden]="!isUserAuth()" class="btn btn-outline-success ml-2 mr-2"
+                        type="button"
+                        routerLink="/create-annonce"><span
+                  class="fas fa-plus fa-lg"></span> Ajouter annonce
+                </button>
 
-<!--<div class="navbar-form">-->
-<!--<form class="form-inline" (ngSubmit)="search()">-->
-<!--<div class="input-group">-->
-<!--<input type="text" class="form-control" [(ngModel)]="keyword" name="keyword"-->
-<!--placeholder="Rechercher"-->
-<!--aria-label="Mots clés"-->
-<!--aria-describedby="button-addon2">-->
-<!--<div class="input-group-append">-->
-<!--<button class="btn btn-accent btn-outline-secondary" type="submit" id="button-addon2"><span-->
-<!--class="fas fa-search"></span></button>-->
-<!--</div>-->
-<!--</div>-->
-<!--</form>-->
-<!--</div>-->
+                <button [disabled]="isUserAuth()" [hidden]="isUserAuth()"
+                        class="btn btn-accent btn-circle  float-right"
+                        type="button"
+                        routerLink="/login"><span
+                  class="fas fa-user fa-lg" data-toggle="tooltip" data-placement="bottom"
+                  title="S'authentifier"></span>
+                </button>
 
-<!--<div class="navbar-nav order-last mr-md-5 mr-sm-1">-->
-<!--<div class="input-group">-->
-<!--<div class="container-fluid">-->
-<!--<button [hidden]="!isUserAuth()" class="btn btn-outline-success" type="button"-->
-<!--routerLink="/annonces/new"><span-->
-<!--class="fas fa-plus fa-lg"></span> Ajouter annonce-->
-<!--</button>-->
-<!--<button [hidden]="!isUserAuth()" class="btn btn-outline-success" type="button"-->
-<!--routerLink="/annonces/new"><span-->
-<!--class="fas fa-plus fa-lg"></span> Gérer mes annonces-->
-<!--</button>-->
-<!--<button [hidden]="isUserAuth()" class="btn btn-accent btn-circle" type="button" routerLink="/login"><span-->
-<!--class="fas fa-user fa-lg"-->
-<!--data-toggle="tooltip" data-placement="bottom" title="S'authentifier"></span></button>-->
-<!--<img [hidden]="!isUserAuth()" class="rounded-img" (click)="signOut()" src={{getPhotoVendeurUrl()}} width="40px"-->
-<!--height="40px"/>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</nav>-->
-
-<nav class="navbar navbar-expand-md navbar-fixed-top navbar-light bg-light">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand" routerLink="/annonces">OLIWEB</a>
-  <img [hidden]="!isUserAuth()" class="rounded-img" (click)="signOut()" src={{getPhotoVendeurUrl()}} width="40px"
-       height="40px"/>
-  <div class="collapse navbar-collapse" id="navbarNav">
-
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0" [hidden]="!isUserAuth()">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Mes annonces<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Conversations</a>
-      </li>
-    </ul>
-
-    <div class="navbar-form">
-      <form class="form-inline my-2 my-lg-0 mr-5" (ngSubmit)="search()">
-        <div class="container-fluid">
-          <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="keyword" name="keyword"
-                   placeholder="Rechercher"
-                   aria-label="Mots clés"
-                   aria-describedby="button-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-accent btn-outline-secondary" type="submit" id="button-addon2"><span
-                class="fas fa-search"></span></button>
+                <img [hidden]="!isUserAuth()" class="rounded-img" (click)="signOut()" src={{getPhotoVendeurUrl()}}
+                     width="40px"
+                     height="40px"/>
+              </div>
             </div>
           </div>
-
-          <div class="float-right">
-            <button [hidden]="isUserAuth()" class="btn btn-accent btn-circle" type="button" routerLink="/login"><span
-              class="fas fa-user fa-lg"
-              data-toggle="tooltip" data-placement="bottom" title="S'authentifier"></span></button>
-            <img [hidden]="!isUserAuth()" class="rounded-img" (click)="signOut()" src={{getPhotoVendeurUrl()}}
-                 width="40px"
-                 height="40px"/>
-          </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </nav>
   </div>
-</nav>
+</div>

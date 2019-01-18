@@ -22,8 +22,12 @@ export class AnnonceElementComponent implements OnInit {
     this.getPhotoVendeurUrl();
   }
 
+  isPhotoPresent() {
+    return this.annonce.photos && this.annonce.photos[0].length > 0;
+  }
+
   getPhotoUrl() {
-    return (this.annonce.photos && this.annonce.photos[0].length > 0) ? this.annonce.photos[0] : "assets/test.svg";
+    return (this.isPhotoPresent()) ? this.annonce.photos[0] : "assets/icon.png";
   }
 
   goToDetail() {

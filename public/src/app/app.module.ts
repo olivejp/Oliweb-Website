@@ -10,7 +10,6 @@ import {AnnonceElementComponent} from './components/annonce-element/annonce-elem
 import {AnnonceService} from "./services/AnnonceService";
 import {SignInService} from "./services/SignInService";
 import {NotFoundComponent} from './not-found/not-found.component';
-import {MaterialModule} from "./modules/material.module";
 import {AnnonceCreationComponent} from './components/annonce-creation/annonce-creation.component';
 import {UserService} from "./services/UserService";
 import {FormsModule} from "@angular/forms";
@@ -27,6 +26,7 @@ import {LoadingDialogComponent} from './components/loading-dialog/loading-dialog
 import {RulesComponent} from './components/rules/rules.component';
 import {PaginationModule} from './shared/pagination/pagination.module';
 import {LoggerService} from "./services/LoggerService";
+import {MediaMatcher} from "@angular/cdk/layout";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},
@@ -64,8 +64,7 @@ const appRoutes: Routes = [
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes, {useHash: true}),
-    MaterialModule,
+    RouterModule.forRoot(appRoutes, {useHash: true})
   ],
   providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService],
   bootstrap: [AppComponent]

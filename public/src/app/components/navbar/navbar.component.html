@@ -2,34 +2,22 @@
   <div class="col-md-12 pr-0 pl-0">
     <nav class="navbar navbar-wrapper navbar-expand-lg navbar-fixed-top fixed-top navbar-light light">
       <div class="container">
-        <div class="col-md-2">
+        <div class="col-md-1">
           <a class="navbar-brand" routerLink="/annonces"
              style="text-align: justify-all; font-family: 'Gloria Hallelujah', cursive; font-size: 35px; color: #ff7043; font-weight: bold">
             Oliweb</a>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-11">
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="row">
-              <div class="col-1">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0" [hidden]="!isUserAuth()">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown"
-                       aria-haspopup="true"
-                       aria-expanded="false"> Mes informations </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Mes annonces</a>
-                      <a class="dropdown-item" href="#">Mes conversations</a>
-                    </div>
-                  </li>
-                </ul>
+              <div class="col-3">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav"
                         aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
               </div>
-              <div class="col-7">
+              <div class="col-5">
                 <form class="form-inline" (ngSubmit)="search()">
                   <div class="input-group col-12">
                     <input type="text" class="form-control" [(ngModel)]="keyword" name="keyword"
@@ -44,23 +32,33 @@
                 </form>
               </div>
               <div class="col-4">
-                <button [disabled]="!isUserAuth()" [hidden]="!isUserAuth()" class="btn btn-outline-success ml-2 mr-2"
-                        type="button"
-                        routerLink="/create-annonce"><span
-                  class="fas fa-plus fa-lg"></span> Ajouter annonce
-                </button>
+                <div class="float-right">
+                  <button [disabled]="isUserAuth()" [hidden]="isUserAuth()"
+                          class="btn btn-accent btn-circle"
+                          type="button"
+                          routerLink="/login"><span
+                    class="fas fa-user fa-lg" data-toggle="tooltip" data-placement="bottom"
+                    title="S'authentifier"></span>
+                  </button>
 
-                <button [disabled]="isUserAuth()" [hidden]="isUserAuth()"
-                        class="btn btn-accent btn-circle  float-right"
-                        type="button"
-                        routerLink="/login"><span
-                  class="fas fa-user fa-lg" data-toggle="tooltip" data-placement="bottom"
-                  title="S'authentifier"></span>
-                </button>
+                  <ul class="navbar-nav mr-auto mt-2 mt-lg-0"  [hidden]="!isUserAuth()">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                         data-toggle="dropdown"
+                         aria-haspopup="true"
+                         aria-expanded="false"> Mes informations </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/#/annonces/new">Ajouter une annonce</a>
+                        <a class="dropdown-item" href="#">Mes annonces</a>
+                        <a class="dropdown-item" href="#">Mes conversations</a>
+                      </div>
+                    </li>
+                  </ul>
 
-                <img [hidden]="!isUserAuth()" class="rounded-img" (click)="signOut()" src={{getPhotoVendeurUrl()}}
-                     width="40px"
-                     height="40px"/>
+                  <img [hidden]="!isUserAuth()" class="rounded-img" (click)="signOut()" src={{getPhotoVendeurUrl()}}
+                       width="40px"
+                       height="40px"/>
+                </div>
               </div>
             </div>
           </div>

@@ -71,7 +71,9 @@ export class AnnonceService implements OnInit {
           annonce.categorie.id = Number(annonce.categorie.id);
 
           // Tentative de sauvegarde dans Firebase
-          return firebase.database().ref('/annonces/' + newPostKey).set(annonce);
+          firebase.database().ref('/annonces/' + newPostKey).set(annonce)
+            .then(value => resolve(value))
+            .catch(reason => reject(new Error(reason)));
         })
     );
   }
@@ -79,7 +81,7 @@ export class AnnonceService implements OnInit {
   getAnnoncesListener() {
     this.annonces = [];
     firebase.database().ref('/annonces')
-      .on('child', (data: DataSnapshot) => {
+      .on('value', (data: DataSnapshot) => {
           if (data) {
             data.forEach(child => {
               if (child.val()) {

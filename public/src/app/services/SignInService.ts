@@ -4,7 +4,6 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import {Injectable} from "@angular/core";
 import {User} from "../domain/user.model";
 import {Subject} from "rxjs/Subject";
-import {ChatService} from "./ChatService";
 
 @Injectable()
 export class SignInService {
@@ -24,17 +23,23 @@ export class SignInService {
   signInGoogle() {
     return firebase.auth().signInWithPopup(new GoogleAuthProvider())
       .then((user) => {
+        this.isAuth = true;
         this.provider = 'google';
+        this.emitIsAuth();
         return user;
-      });
+      })
+      .catch(reason => console.error(reason));
   }
 
   signInFacebook() {
     return firebase.auth().signInWithPopup(new FacebookAuthProvider)
       .then((user) => {
+        this.isAuth = true;
         this.provider = 'facebook';
+        this.emitIsAuth();
         return user;
-      });
+      })
+      .catch(reason => console.error(reason));
   }
 
   signOut(): Promise<any> {

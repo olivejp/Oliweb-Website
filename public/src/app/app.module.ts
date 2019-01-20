@@ -26,18 +26,18 @@ import {LoadingDialogComponent} from './components/loading-dialog/loading-dialog
 import {RulesComponent} from './components/rules/rules.component';
 import {PaginationModule} from './shared/pagination/pagination.module';
 import {LoggerService} from "./services/LoggerService";
-import {MediaMatcher} from "@angular/cdk/layout";
+import {NewAnnonceGuardGuard} from "./components/new-annonce-guard/new-annonce-guard.guard";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},
   {path: 'annonces/search/:keyword', component: AnnonceListSearchComponent},
-  {path: 'annonces/new', component: AnnonceCreationComponent},
+  {path: 'annonces/new', component: AnnonceCreationComponent, canActivate: [NewAnnonceGuardGuard]},
   {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
   {path: 'login', component: UserSignInComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'rules', component: RulesComponent},
   {path: '', redirectTo: '/annonces', pathMatch: 'full'},
-  {path: '**', redirectTo: '/not-found'},
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({
@@ -66,7 +66,7 @@ const appRoutes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(appRoutes, {useHash: true})
   ],
-  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService],
+  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService, NewAnnonceGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

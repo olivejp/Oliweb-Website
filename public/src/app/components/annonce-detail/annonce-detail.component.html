@@ -34,10 +34,11 @@
       <div class="col-md-3">
         <h3>{{annonce.titre}}</h3>
         <p>{{annonce.description}}</p>
-        <button class="btn btn-primary btn-lg" *ngIf="annonce.contactEmail">
+        <h4 class="price">{{annonce.prix | number}} XPF</h4>
+        <button class="btn btn-primary" *ngIf="annonce.contactEmail">
           EMAIL
         </button>
-        <button class="btn btn-primary btn-lg" *ngIf="annonce.contactMsg">
+        <button class="btn btn-primary" *ngIf="annonce.contactMsg">
           MESSAGE
         </button>
       </div>

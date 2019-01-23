@@ -6,7 +6,7 @@
   <div class="card-body">
     <h4 class="card-title" style="color: gray">{{annonce.titre}}</h4>
     <div>
-      <h5 class="price">{{annonce.prix}} XPF</h5>
+      <h5 class="price">{{annonce.prix |number}} XPF</h5>
     </div>
     <div>
       <p>Posté le {{annonce.datePublication | date:'dd/MM/yy à HH:mm'}}</p>

@@ -27,9 +27,12 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.openDialog();
+
+    this.annonces = [];
+
+    // On lance la première recherche
     this.searchRequestService.launchSearch()
       .then(resultEs => {
-        this.annonces = [];
         for (let annonceEs of resultEs.hits) {
           this.annonces.push(annonceEs._source);
         }

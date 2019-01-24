@@ -12,7 +12,8 @@
             <ol class="carousel-indicators">
               <li *ngFor="let photoUrl of annonce.photos; let indexes = indexes"
                   data-target="#carouselExampleIndicators"
-                  data-slide-to="0" [ngClass]="{'active':indexes == 0}"></li>
+                  data-slide-to="0" [ngClass]="{'active':indexes == 0}">
+              </li>
             </ol>
             <div class="carousel-inner">
               <div *ngFor="let photoUrl of annonce.photos; let index = index" class="carousel-item"
@@ -35,10 +36,10 @@
         <h3>{{annonce.titre}}</h3>
         <p>{{annonce.description}}</p>
         <h4 class="price">{{annonce.prix | number}} XPF</h4>
-        <button class="btn btn-primary" *ngIf="annonce.contactEmail">
+        <button class="btn btn-primary" *ngIf="annonce.contactEmail" (click)="sendEmail()">
           EMAIL
         </button>
-        <button class="btn btn-primary" *ngIf="annonce.contactMsg">
+        <button class="btn btn-primary" *ngIf="annonce.contactMsg" (click)="goToChat()">
           MESSAGE
         </button>
       </div>

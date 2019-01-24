@@ -1,35 +1,30 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Message} from "../domain/message.model";
 import * as firebase from "firebase";
-import {Chat} from '../domain/chat.model';
 import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable()
-export class ChatService implements OnInit {
+export class MessageService {
 
-  ngOnInit() {
-  }
+  constructor() { }
 
-  constructor() {
-  }
-
-  getChatsByUidUser(uidUser: string): Promise<Chat[]> {
+  getMessagesByChatUid(chatUid: string): Promise<Message[]> {
     return new Promise((resolve, reject) => {
       firebase.database()
-        .ref('/chats')
-        .orderByChild('/members/' + uidUser)
-        .equalTo(true)
+        .ref('/messages/' + chatUid)
+        .orderByChild('/timestamp')
         .on('value', (data: DataSnapshot) => {
-            const chats = [];
+            const messages = [];
             if (data) {
               data.forEach(child => {
                 if (child.val()) {
-                  chats.push(child.val());
+                  messages.push(child.val());
                   return false;
                 } else {
                   return true;
                 }
               });
-              resolve(chats);
+              resolve(messages);
             } else {
               reject(new Error('Aucun enregistrement retourné'));
             }

@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="col-md-5">
+    <div *ngFor="let chat of chats">
+      <div class="row">
+        <app-chat-element [chat]="chat" (chatSelected)="selectChat($event)"></app-chat-element>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <app-message-list [messages]="messages"></app-message-list>
+  </div>
+</div>

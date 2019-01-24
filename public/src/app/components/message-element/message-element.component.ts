@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Message} from "../../domain/message.model";
+import {User} from "../../domain/user.model";
 
 @Component({
   selector: 'app-message-element',
@@ -7,6 +8,12 @@ import {Message} from "../../domain/message.model";
   styleUrls: ['./message-element.component.scss']
 })
 export class MessageElementComponent implements OnInit {
+
+  @Input()
+  buyer: User;
+
+  @Input()
+  seller: User;
 
   @Input()
   message: Message;

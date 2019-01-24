@@ -17,6 +17,7 @@ export class ChatService implements OnInit {
       firebase.database()
         .ref('/chats')
         .orderByChild('/members/' + uidUser)
+        .equalTo(true)
         .on('value', (data: DataSnapshot) => {
             const chats = [];
             if (data) {

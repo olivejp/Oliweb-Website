@@ -8,7 +8,7 @@
 }
 
 .zoom:hover {
-  transform: scale(1.07);
+  transform: scale(1.03);
 }
 
 .price {
@@ -18,4 +18,12 @@
 
 .rounded-img {
   border-radius: 50%;
+}
+
+.custom-img{
+  padding: 30px;
+  max-height: 250px;
+  width: auto;
+  object-fit: contain;
+  background-color: darkgray;
 }

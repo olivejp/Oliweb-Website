@@ -3,7 +3,9 @@ import {Location} from '@angular/common';
 import {AnnonceService} from "../../services/AnnonceService";
 import {Annonce} from "../../domain/annonce.model";
 import {UserService} from "../../services/UserService";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {routerNgProbeToken} from "@angular/router/src/router_module";
+import {SignInService} from "../../services/SignInService";
 
 @Component({
   selector: 'app-annonce-detail',
@@ -17,9 +19,11 @@ export class AnnonceDetailComponent implements OnInit {
   userImgSrc: String;
   uidUserParrain: string;
 
-  constructor(private annonceService: AnnonceService,
+  constructor(private router: Router,
+              private annonceService: AnnonceService,
               private userService: UserService,
               private route: ActivatedRoute,
+              private signInService: SignInService,
               private location: Location) {
   }
 
@@ -50,5 +54,17 @@ export class AnnonceDetailComponent implements OnInit {
 
   onBackPressed() {
     this.location.back();
+  }
+
+  sendEmail() {
+    window.open('mailto:' + this.annonce.utilisateur.email + '?subject=' + this.annonce.titre + '&body=Votre annonce m\'intéresse');
+  }
+
+  goToChat() {
+    if (this.signInService.isAuth) {
+      this.router.navigate(['/chat'], {queryParams: {annonceUid: this.annonce.uuid, sellerUid: this.annonce.utilisateur.uuid, buyerUid: this.signInService.getUserAuth().uid}});
+    } else {
+      this.router.navigate(['/login'])
+    }
   }
 }

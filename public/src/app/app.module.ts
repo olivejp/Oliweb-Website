@@ -10,7 +10,6 @@ import {AnnonceElementComponent} from './components/annonce-element/annonce-elem
 import {AnnonceService} from "./services/AnnonceService";
 import {SignInService} from "./services/SignInService";
 import {NotFoundComponent} from './not-found/not-found.component';
-import {MaterialModule} from "./modules/material.module";
 import {AnnonceCreationComponent} from './components/annonce-creation/annonce-creation.component';
 import {UserService} from "./services/UserService";
 import {FormsModule} from "@angular/forms";
@@ -27,17 +26,25 @@ import {LoadingDialogComponent} from './components/loading-dialog/loading-dialog
 import {RulesComponent} from './components/rules/rules.component';
 import {PaginationModule} from './shared/pagination/pagination.module';
 import {LoggerService} from "./services/LoggerService";
+import {NewAnnonceGuardGuard} from "./components/new-annonce-guard/new-annonce-guard.guard";
+import { ChatComponent } from './components/chat/chat.component';
+import { ToastComponent } from './components/toast/toast.component';
+import { ChatElementComponent } from './components/chat-element/chat-element.component';
+import { MessageElementComponent } from './components/message-element/message-element.component';
+import { MessageListComponent } from './components/message-list/message-list.component';
+import {MessageService} from "./services/MessageService";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},
   {path: 'annonces/search/:keyword', component: AnnonceListSearchComponent},
-  {path: 'annonces/new', component: AnnonceCreationComponent},
+  {path: 'annonces/new', component: AnnonceCreationComponent, canActivate: [NewAnnonceGuardGuard]},
   {path: 'annonces/view/:uid', component: AnnonceDetailComponent},
   {path: 'login', component: UserSignInComponent},
+  {path: 'chat', component: ChatComponent, canActivate: [NewAnnonceGuardGuard]},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'rules', component: RulesComponent},
   {path: '', redirectTo: '/annonces', pathMatch: 'full'},
-  {path: '**', redirectTo: '/not-found'},
+  {path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({
@@ -54,7 +61,12 @@ const appRoutes: Routes = [
     AnnonceListSearchComponent,
     AnnonceListContainerComponent,
     LoadingDialogComponent,
-    RulesComponent
+    RulesComponent,
+    ChatComponent,
+    ToastComponent,
+    ChatElementComponent,
+    MessageElementComponent,
+    MessageListComponent
   ],
   entryComponents: [
     LoadingDialogComponent
@@ -64,10 +76,9 @@ const appRoutes: Routes = [
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes, {useHash: true}),
-    MaterialModule,
+    RouterModule.forRoot(appRoutes, {useHash: true})
   ],
-  providers: [AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService],
+  providers: [MessageService, AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService, NewAnnonceGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

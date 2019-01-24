@@ -1,3 +1,7 @@
+.light {
+  background-color: #e2e2e2;
+}
+
 .oliweb-avatar {
   cursor: pointer;
   border-radius: 50%;
@@ -22,7 +26,6 @@
 .btn-accent {
   color: #fff;
   background-color: #ff7043;
-  border-color: #ff2a36;
 }
 
 @media (max-width: 767px) {
@@ -31,6 +34,20 @@
   }
 }
 
+
 .rounded-img {
   border-radius: 50%;
+}
+
+@media (min-width: 1900px) {
+  .navbar.navbar-expand-xxl {
+    links,
+    navlinks {
+      display: flex;
+      flex-direction: row;
+      align-items: center !important;
+      align-self: center !important;
+      width: 100%;
+    }
+  }
 }

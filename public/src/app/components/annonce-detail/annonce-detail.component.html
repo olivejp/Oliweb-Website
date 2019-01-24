@@ -1,45 +1,48 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-1">
-      <button type="button" class="btn btn-accent btn-circle" (click)="onBackPressed()"><i
-        class="fas fa-chevron-left"></i>
-      </button>
-    </div>
-    <div class="col-md-8">
-      <div class="row" *ngIf="annonce">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li *ngFor="let photoUrl of annonce.photos; let indexes = indexes" data-target="#carouselExampleIndicators"
-                data-slide-to="0" [ngClass]="{'active':indexes == 0}"></li>
-          </ol>
-          <div class="carousel-inner">
-            <div *ngFor="let photoUrl of annonce.photos; let index = index" class="carousel-item"
-                 [ngClass]="{'active':index == 0}">
-              <img class="d-block w-100" src="{{photoUrl}}" alt="{{photoUrl}}">
+  <div class="row justify-content-center align-items-center">
+    <div style="flex-grow: 1; padding: 20px 50px 50px 20px; text-align: center">
+      <div class="col-md-1">
+        <button type="button" class="btn btn-accent btn-circle" (click)="onBackPressed()"><i
+          class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+      <div class="col-md-8">
+        <div class="row" *ngIf="annonce">
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li *ngFor="let photoUrl of annonce.photos; let indexes = indexes"
+                  data-target="#carouselExampleIndicators"
+                  data-slide-to="0" [ngClass]="{'active':indexes == 0}">
+              </li>
+            </ol>
+            <div class="carousel-inner">
+              <div *ngFor="let photoUrl of annonce.photos; let index = index" class="carousel-item"
+                   [ngClass]="{'active':index == 0}">
+                <img class="d-block w-100" src="{{photoUrl}}" alt="{{photoUrl}}">
+              </div>
             </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
         </div>
       </div>
-    </div>
-    <div class="col-md-3">
-      <h3>{{annonce.titre}}</h3>
-      <p>{{annonce.description}}</p>
-      <button class="btn btn-primary btn-lg" *ngIf="annonce.contactEmail">
-        EMAIL
-      </button>
-      <button class="btn btn-primary btn-lg" *ngIf="annonce.contactMsg">
-        MESSAGE
-      </button>
+      <div class="col-md-3">
+        <h3>{{annonce.titre}}</h3>
+        <p>{{annonce.description}}</p>
+        <h4 class="price">{{annonce.prix | number}} XPF</h4>
+        <button class="btn btn-primary" *ngIf="annonce.contactEmail" (click)="sendEmail()">
+          EMAIL
+        </button>
+        <button class="btn btn-primary" *ngIf="annonce.contactMsg" (click)="goToChat()">
+          MESSAGE
+        </button>
+      </div>
     </div>
   </div>
 </div>
-
-

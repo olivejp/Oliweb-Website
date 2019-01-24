@@ -5,7 +5,7 @@ import {CategorieService} from '../../services/CategorieService';
 import {Categorie} from '../../domain/categorie.model';
 import {SignInService} from '../../services/SignInService';
 import {User} from '../../domain/user.model';
-import {MatSnackBar} from '@angular/material';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-annonce-creation',
@@ -14,6 +14,7 @@ import {MatSnackBar} from '@angular/material';
 })
 export class AnnonceCreationComponent implements OnInit {
 
+  categorieSelected: Categorie;
   annonce: Annonce;
   erreur: String;
   contactEmail: boolean;
@@ -25,15 +26,15 @@ export class AnnonceCreationComponent implements OnInit {
   constructor(private annonceService: AnnonceService,
               private categorieService: CategorieService,
               private signInService: SignInService,
-              public snackBar: MatSnackBar) {
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.annonce = new Annonce('', '', '');
+    this.annonce = new Annonce();
+    this.annonce.contactTel = false;
+    this.annonce.contactMsg = false;
+    this.annonce.contactEmail = false;
     this.annonce.photos = [];
-    this.contactEmail = true;
-    this.contactTel = true;
-    this.contactMsg = true;
 
     this.categorieService.getAllCategories().then((categories) => {
       this.categories = categories;
@@ -50,41 +51,65 @@ export class AnnonceCreationComponent implements OnInit {
   }
 
   saveAnnonce() {
-    if (this.signInService.isAuth) {
-      this.annonce.utilisateur = this.convertUser(this.signInService.getUserAuth());
-      this.annonce.contactMsg = this.contactMsg;
-      this.annonce.contactTel = this.contactTel;
-      this.annonce.contactEmail = this.contactEmail;
-      this.annonceService.saveAnnonce(this.annonce)
-        .then((data) => {
-          this.snackBar.open('SAUVEGARDE RÉUSSI', '', {
-            duration: 2000,
-          });
-        })
-        .catch((reason) => {
-          this.snackBar.open('SAUVEGARDE ÉCHOUÉE', '', {
-            duration: 2000,
-          });
-          this.erreur = reason.message;
-        });
-    } else {
+    if (!this.signInService.isAuth) {
+      this.erreur = 'Impossible d\'envoyer des annonces sans être authentifié';
       console.log('Impossible d\'envoyer des annonces sans être authentifié');
+      return;
     }
+
+    if (!this.categorieSelected) {
+      this.erreur = 'Une catégorie est nécessaire';
+      return;
+    }
+
+    if (!this.annonce.titre || this.annonce.titre.length == 0) {
+      this.erreur = 'Un titre est nécessaire';
+      return;
+    }
+
+    if (!this.annonce.description) {
+      this.erreur = 'Une description est nécessaire';
+      return;
+    }
+
+    if (!this.annonce.prix) {
+      this.erreur = 'Un prix est nécessaire';
+      return;
+    }
+
+    if (!this.annonce.contactEmail && !this.annonce.contactTel && !this.annonce.contactMsg) {
+      this.erreur = 'Un moyen de contact est nécessaire';
+      return;
+    }
+
+    this.annonce.utilisateur = this.convertUser(this.signInService.getUserAuth());
+    this.annonce.categorie = this.categorieSelected;
+    this.annonceService.saveAnnonce(this.annonce)
+      .then((data) => {
+        this.router.navigate(['annonces']);
+      })
+      .catch((reason) => {
+        this.erreur = reason.message;
+      });
   }
 
   onChangeContactTel() {
-    this.contactTel = !this.contactTel;
+    this.annonce.contactTel = !this.annonce.contactTel;
   }
 
   onChangeContactMsg() {
-    this.contactMsg = !this.contactMsg;
+    this.annonce.contactMsg = !this.annonce.contactMsg;
   }
 
   onChangeContactEmail() {
-    this.contactEmail = !this.contactEmail;
+    this.annonce.contactEmail = !this.annonce.contactEmail;
   }
 
   goBack() {
     window.history.back();
   }
+
+  setCategorie(categorie: Categorie) {
+    this.categorieSelected = categorie;
+  };
 }

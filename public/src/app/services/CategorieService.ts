@@ -47,7 +47,7 @@ export class CategorieService implements OnInit {
             const categoriesRead = [];
             if (data) {
               data.forEach(child => {
-                categoriesRead.push(new Categorie(child.key, child.val()));
+                categoriesRead.push(new Categorie(+child.key, child.val()));
               });
             }
             resolve(categoriesRead);

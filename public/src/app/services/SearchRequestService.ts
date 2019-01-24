@@ -17,6 +17,19 @@ export class SearchRequestService implements OnInit {
   constructor(private firebaseUtilityService: FirebaseUtilityService) {
   }
 
+  /**
+   * La méthode de recherche complète.
+   *
+   * @param keyword
+   * @param priceHigh
+   * @param priceLow
+   * @param categories
+   * @param hasPhotos
+   * @param from
+   * @param size
+   * @param order
+   * @return Promise<ResultEs> La promesse retourne un résultat de rechercher Elastic Search.
+   */
   launchSearch(keyword?: string, priceHigh?: number, priceLow?: number, categories?: string[], hasPhotos?: boolean, from?: number, size?: number, order?: string): Promise<ResultEs> {
     let self = this;
     return this.saveRequest(keyword, priceHigh, priceLow, categories, hasPhotos, from, size, order)
@@ -27,7 +40,7 @@ export class SearchRequestService implements OnInit {
   }
 
   /**
-   * On va écouter la request pour savoir s'il y a des résultats.
+   * On va se positionner sur la request ID et écouter pour savoir s'il y a des résultats.
    * @param requestKey
    */
   listenRequestResult(requestKey: string): Promise<ResultEs> {
@@ -39,15 +52,26 @@ export class SearchRequestService implements OnInit {
           } else if (request.hasChild(this.NO_RESULTS)) {
             reject(new Error('Aucun résultat'));
           }
+          // On supprime la request ID de Firebase
           firebase.database().ref(this.REQUEST_PATH + requestKey).remove().catch(reason => console.error(reason));
         }
       });
     })
   }
 
-  // 1 - Lire le timestamp du serveur
-  // 2 - Créer une nouvelle entrée dans le noeud /requests
-  // 3 - Retourne la request ID dans une promise
+  /**
+   * 1 - Lire le timestamp du serveur
+   * 2 - Créer une nouvelle entrée dans le noeud /requests
+   * 3 - Retourne la request ID dans une promise
+   * @param keyword
+   * @param priceHigh
+   * @param priceLow
+   * @param categories
+   * @param hasPhotos
+   * @param from
+   * @param size
+   * @param order
+   */
   saveRequest(keyword?: string, priceHigh?: number, priceLow?: number, categories?: string[], hasPhotos?: boolean, from?: number, size?: number, order?: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       this.firebaseUtilityService.getServerTimestamp()
@@ -63,7 +87,7 @@ export class SearchRequestService implements OnInit {
             "sort": [
               {
                 "datePublication": {
-                  "order": (order) ? order : "asc"
+                  "order": (order) ? order : "desc"
                 }
               }
             ],
@@ -116,18 +140,19 @@ export class SearchRequestService implements OnInit {
               }
             };
 
-            // TODO ne fonctionne pas. Il faudrait inscrire categorie.libelle mais on ne peut pas mettre de . dans une requête.
-            for (let categorie of categories) {
-              categorieArray.bool.should.push({
-                "match": {
-                  "libelle": categorie
-                }
-              })
-            }
+            // TODO ne fonctionne pas pour le moment. Il faudrait inscrire categorie.libelle mais on ne peut pas mettre de . dans une requête.
+            // for (let categorie of categories) {
+            //   categorieArray.bool.should.push({
+            //     "match": {
+            //       "libelle": categorie
+            //     }
+            //   })
+            // }
 
             requestToStringify.query.bool.must.push(categorieArray);
           }
 
+          // On transforme la requête JSON en un string
           elasticsearchRequest.request = JSON.stringify(requestToStringify);
 
           // Tentative de sauvegarde dans Firebase

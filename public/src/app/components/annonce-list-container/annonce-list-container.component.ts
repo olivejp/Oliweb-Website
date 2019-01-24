@@ -4,10 +4,7 @@ import {Annonce} from "../../domain/annonce.model";
 import {AnnonceService} from "../../services/AnnonceService";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
-import * as firebase from "firebase";
 import {SearchRequestService} from "../../services/SearchRequestService";
-import {LoadingDialogComponent} from "../loading-dialog/loading-dialog.component";
-import {MatDialog, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-annonce-list-container',
@@ -20,21 +17,22 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
   selectedAnnonce: Annonce;
   isAuth: any;
   isLoading: boolean;
-  dialogRef: MatDialogRef<LoadingDialogComponent>;
 
   constructor(private annonceService: AnnonceService,
               private searchRequestService: SearchRequestService,
               private router: Router,
-              private signInService: SignInService,
-              public dialog: MatDialog) {
+              private signInService: SignInService) {
   }
 
   ngOnInit() {
     this.isLoading = true;
     this.openDialog();
+
+    this.annonces = [];
+
+    // On lance la première recherche
     this.searchRequestService.launchSearch()
       .then(resultEs => {
-        this.annonces = [];
         for (let annonceEs of resultEs.hits) {
           this.annonces.push(annonceEs._source);
         }
@@ -56,19 +54,10 @@ export class AnnonceListContainerComponent implements OnInit, OnDestroy {
 
   openDialog() {
     this.isLoading = true;
-    this.dialogRef = this.dialog.open(LoadingDialogComponent, {
-      width: 'auto',
-      height: 'auto'
-    });
-
-    this.dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   closeDialog() {
     this.isLoading = false;
-    this.dialogRef.close(null);
   }
 
   ngOnDestroy() {

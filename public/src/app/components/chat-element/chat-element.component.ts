@@ -59,8 +59,4 @@ export class ChatElementComponent implements OnInit {
   selectChat() {
     this.chatSelected.emit(this.chat);
   }
-
-  isActive() {
-    return this.selectedChat && this.selectedChat.uid === this.chat.uid
-  }
 }

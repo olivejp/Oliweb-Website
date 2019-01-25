@@ -15,7 +15,7 @@ export class NewAnnonceGuardGuard implements CanActivate {
     return new Promise((resolve, reject) =>{
       resolve(this.signInService.isAuth);
       if (!this.signInService.isAuth) {
-        this.router.navigate(['/annonces']);
+        this.router.navigate(['/login']);
       }
     });
   }

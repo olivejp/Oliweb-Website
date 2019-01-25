@@ -3,13 +3,12 @@
     <nav class="navbar navbar-wrapper navbar-expand-lg navbar-fixed-top fixed-top navbar-light light">
       <div class="container">
         <div class="col-md-1">
-          <a class="navbar-brand" routerLink="/annonces"
-             style="text-align: justify-all; font-family: 'Gloria Hallelujah', cursive; font-size: 35px; color: #ff7043; font-weight: bold">
+          <a class="navbar-brand oliweb-brand" routerLink="/annonces">
             Oliweb</a>
         </div>
         <div class="col-md-11">
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="row">
+            <div class="row" style="align-items: center;display: flex;">
               <div class="col-3">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav"
@@ -32,7 +31,8 @@
                 </form>
               </div>
               <div class="col-4">
-                <div class="float-right">
+                <div class="float-right" style="align-items: center;display: flex;">
+
                   <button [disabled]="isUserAuth()" [hidden]="isUserAuth()"
                           class="btn btn-accent btn-circle"
                           type="button"
@@ -41,23 +41,21 @@
                     title="S'authentifier"></span>
                   </button>
 
-                  <ul class="navbar-nav mr-auto mt-2 mt-lg-0"  [hidden]="!isUserAuth()">
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                         data-toggle="dropdown"
-                         aria-haspopup="true"
-                         aria-expanded="false"> Mes informations </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" routerLink="/annonces/new">Ajouter une annonce</a>
-                        <a class="dropdown-item" href="#">Mes annonces</a>
-                        <a class="dropdown-item" routerLink="/chat">Mes conversations</a>
-                      </div>
-                    </li>
-                  </ul>
-
-                  <img [hidden]="!isUserAuth()" class="rounded-img" (click)="signOut()" src={{getPhotoVendeurUrl()}}
-                       width="40px"
-                       height="40px"/>
+                  <div class="dropdown">
+                    <button style="background: transparent; border: transparent" class="btn btn-secondary dropdown-toggle" type="button" [hidden]="!isUserAuth()" id="navbarDropdown" data-placement="bottom" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                      <img class="rounded-img" src={{getPhotoVendeurUrl()}}
+                           width="40px"
+                           height="40px"/>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" routerLink="/annonces/new">Ajouter une annonce</a>
+                      <a class="dropdown-item" href="#">Mes annonces</a>
+                      <a class="dropdown-item" routerLink="/chat">Mes conversations</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" (click)="signOut()">Se déconnecter</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

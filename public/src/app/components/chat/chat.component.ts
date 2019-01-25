@@ -62,7 +62,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // On va écouter les nouveaux chats
     this.subscriptionChat = this.chatService.listenForAddedChatsByUserUid(userUid)
-      .subscribe(chatNew => this.chats.push(chatNew));
+      .subscribe(chatNew => {
+        if (this.chats) this.chats.push(chatNew);
+      })
+    ;
 
     // On va écouter les chats supprimés
     this.subscriptionChatDeleted = this.chatService.listenForRemovedChatsByUserUid(userUid)

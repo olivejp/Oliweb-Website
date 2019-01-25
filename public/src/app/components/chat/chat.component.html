@@ -1,20 +1,28 @@
-<div class="container" style="min-height: 500px; height: 100vh">
-  <div class="row">
-    <div class="col-md-4" style="border-right: 1px solid rgba(0,0,0,.15);border-left: 1px solid rgba(0,0,0,.15)">
-      <h3>
-        Mes conversations
-      </h3>
-      <ul style="list-style-type: none; padding-left: 0px">
+<div class="container-fluid" style="min-height: 500px; height: 100vh">
+  <div class="row" style="min-height: 500px; height: 100vh">
+    <div class="col-md-3"
+         style="border-right: 1px solid rgba(0,0,0,.15);border-left: 1px solid rgba(0,0,0,.15)">
+      <div class="row" style="background-color: #a4a2a4">
+        <div class="col-md-12" style="min-height: 50px;text-align: center">
+          <h4>
+            Mes conversations
+          </h4>
+        </div>
+      </div>
+      <ul style="list-style-type: none; padding-left: 0">
         <li *ngFor="let chat of chats">
-          <app-chat-element [chat]="chat" (chatSelected)="selectChat($event)" [selectedChat]="selectedChat" (buyer)="setBuyer($event)"
+          <app-chat-element [chat]="chat" (chatSelected)="selectChat($event)" [selectedChat]="selectedChat"
+                            (buyer)="setBuyer($event)"
                             (seller)="setSeller($event)"></app-chat-element>
         </li>
       </ul>
     </div>
-    <div class="col-md-8" style="margin-bottom: 100px; border-right: 1px solid rgba(0,0,0,.15)">
-      <app-message-list [messages]="messagesFromSelectedChat" [buyer]="(buyerFromSelectedChat) ? buyerFromSelectedChat : null"
+    <div class="col-md-6" style="margin-bottom: 100px; border-right: 1px solid rgba(0,0,0,.15)">
+      <app-message-list [messages]="messagesFromSelectedChat"
+                        [buyer]="(buyerFromSelectedChat) ? buyerFromSelectedChat : null"
                         [seller]="(sellerFromSelectedChat) ? sellerFromSelectedChat : null"></app-message-list>
     </div>
+    <div class="col-md-3"></div>
   </div>
   <div class="row navbar-fixed-bottom" *ngIf="selectedChat" style="background-color: gray;padding: 15px">
     <div class="col-md-2"></div>
@@ -23,7 +31,9 @@
         <input type="text" class="form-control" id="messageToSend" aria-describedby="messageToSendHelp"
                [(ngModel)]="messageToSend" placeholder="Ecrivez ici votre message">
         <div class="input-group-append">
-          <button class="btn btn-accent btn-outline-secondary" type="button" id="messageToSendHelp" (click)="sendMessage()">Envoyer</button>
+          <button class="btn btn-accent btn-outline-secondary" type="button" id="messageToSendHelp"
+                  (click)="sendMessage()">Envoyer
+          </button>
         </div>
       </div>
     </div>

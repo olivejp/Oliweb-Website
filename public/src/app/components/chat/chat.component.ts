@@ -54,6 +54,10 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.queryAnnonceUid = params.get('annonceUid');
       this.querySellerUid = params.get('sellerUid');
       this.queryBuyerUid = params.get('buyerUid');
+
+      if (this.action === 'sendMessage') {
+        // TODO finir la création d'un nouveau chat.
+      }
     });
 
     // On va écouter les nouveaux chats
@@ -98,17 +102,19 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   sendMessage() {
-    let message: Message = new Message();
-    message.message = this.messageToSend;
-    message.uidChat = this.selectedChat.uid;
-    message.uidAuthor = this.signInService.getUserAuth().uid;
-    message.read = false;
-    this.messageService.sendMessage(message)
-      .then(value => {
-        console.log("Message correctement envoyé");
-        this.messageToSend = "";
-      })
-      .catch(reason => console.error(new Error(reason)));
+    if (this.messageToSend && this.messageToSend.length > 0) {
+      let message: Message = new Message();
+      message.message = this.messageToSend;
+      message.uidChat = this.selectedChat.uid;
+      message.uidAuthor = this.signInService.getUserAuth().uid;
+      message.read = false;
+      this.messageService.sendMessage(message)
+        .then(value => {
+          console.log("Message correctement envoyé");
+          this.messageToSend = "";
+        })
+        .catch(reason => console.error(new Error(reason)));
+    }
   }
 
   ngOnDestroy(): void {

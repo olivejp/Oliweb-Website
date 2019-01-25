@@ -20,10 +20,19 @@ export class MessageElementComponent implements OnInit {
 
   dateMessage: Date;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.dateMessage = new Date(this.message.timestamp);
+  }
+
+  fromBuyer() {
+    return this.buyer && this.message.uidAuthor === this.buyer.uid;
+  }
+
+  fromSeller() {
+    return this.seller && this.message.uidAuthor === this.seller.uid;
   }
 
 }

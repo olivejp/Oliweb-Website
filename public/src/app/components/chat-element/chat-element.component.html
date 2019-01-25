@@ -1,8 +1,11 @@
-<div class="card" style="width: 18rem;" (click)="selectChat()">
-  <div class="card-body">
-    <h5 class="card-title">{{chat.titreAnnonce}}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{chatUpdateDate | date}}</h6>
-    <p class="card-text">{{chat.lastMessage}}</p>
-    <img *ngIf="urlPhoto" class="top rounded-img" src="{{urlPhoto}}" width="60px" height="60px">
+<div class="row inline-block" (click)="selectChat()" style="border-bottom: solid gray;" [class.active]="isActive()">
+  <div class="col-md-2 align-middle">
+    <img class="top rounded-img" src="{{(urlPhoto) ? urlPhoto : 'assets/icon.png'}}" width="40px" height="40px">
+  </div>
+  <div class="col-md-7">
+    <h5 style="font-weight: bold">{{chat.titreAnnonce}}</h5>
+  </div>
+  <div class="col-md-3">
+    <h6 style="font-weight: lighter">{{chatUpdateDate | date:'dd/MM/yy à HH:mm'}}</h6>
   </div>
 </div>

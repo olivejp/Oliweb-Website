@@ -1,5 +1,5 @@
-<div *ngFor="let message of messages">
-  <div class="row">
+<ul style="list-style-type: none; padding-left: 0px">
+  <li *ngFor="let message of messages">
     <app-message-element [message]="message" [buyer]="buyer" [seller]="seller"></app-message-element>
-  </div>
-</div>
+  </li>
+</ul>

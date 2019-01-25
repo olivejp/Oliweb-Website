@@ -1,12 +1,28 @@
-<div class="container">
-  <div class="col-md-5">
-    <div *ngFor="let chat of chats">
-      <div class="row">
-        <app-chat-element [chat]="chat" (chatSelected)="selectChat($event)"></app-chat-element>
-      </div>
+<div class="container" style="min-height: 500px; height: 100vh">
+  <div class="row">
+    <div class="col-md-4">
+      <ul style="list-style-type: none; padding-left: 0px">
+        <li *ngFor="let chat of chats">
+          <app-chat-element [chat]="chat" (chatSelected)="selectChat($event)" [selectedChat]="selectedChat" (buyer)="setBuyer($event)"
+                            (seller)="setSeller($event)"></app-chat-element>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <app-message-list [messages]="messagesFromSelectedChat" [buyer]="(buyerFromSelectedChat) ? buyerFromSelectedChat : null"
+                        [seller]="(sellerFromSelectedChat) ? sellerFromSelectedChat : null"></app-message-list>
     </div>
   </div>
-  <div class="col-md-7">
-    <app-message-list [messages]="messages" [buyerUid]="buyerUid" [sellerUid]="sellerUid"></app-message-list>
+  <div class="" *ngIf="selectedChat">
+    <div class="col-md-12">
+      <div class="input-group">
+        <label for="messageToSend">Message</label>
+        <input type="text" class="form-control" id="messageToSend" aria-describedby="messageToSendHelp"
+               [(ngModel)]="messageToSend" placeholder="Ecrivez ici votre message">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" id="messageToSendHelp" (click)="sendMessage()">Envoyer</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

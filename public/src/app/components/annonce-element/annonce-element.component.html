@@ -1,7 +1,7 @@
-<div class="card card-inverse zoom" (click)="goToDetail()">
-  <img class="card-img-top" [class.custom-img]="!isPhotoPresent()" src="{{getPhotoUrl()}}" alt="Photo Annonce" height="250px">
+<div class="card card-inverse zoom" (click)="goToDetail()" style="min-width: 200px">
+  <img class="card-img-top" [class.custom-img]="!isPhotoPresent()" [src]="getPhotoUrl()" alt="Photo Annonce" height="250px">
   <div class="card-img-overlay">
-    <img *ngIf="userPhotoUrl" class="card-img-overlay rounded-img" src="{{userPhotoUrl}}" width="60px" height="60px">
+    <img *ngIf="userPhotoUrl" class="card-img-overlay rounded-img" [src]="userPhotoUrl" width="60px" height="60px">
   </div>
   <div class="card-body">
     <h4 class="card-title" style="color: gray">{{annonce.titre}}</h4>

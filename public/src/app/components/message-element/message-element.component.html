@@ -1,10 +1,22 @@
 <div class="row inline-block row-margin-5">
   <div class="col-md-12">
     <div class="col-md-5" [class.float-right]="fromBuyer()" [class.float-left]="fromSeller()">
-      <div class="card card-padding-10" [class.buyer]="fromBuyer()" [class.seller]="fromSeller()" >
-        <h5 class="card-title">{{message.uidAuthor}}</h5>
-        <p class="card-text">{{message.message}}</p>
-        <h6 class="card-subtitle mb-2 text-muted">{{dateMessage | date:'dd/MM/yy à HH:mm'}}</h6>
+      <div class="card" [class.cardBuyer]="fromBuyer()" [class.cardSeller]="fromSeller()">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2">
+              <img class="rounded-img" [src]="getPhotoUrl()" style="height: 30px; width: 30px;">
+            </div>
+            <div class="col-md-10">
+              <p [class.messageBuyer]="fromBuyer()" [class.messageSeller]="fromSeller()">{{message.message}}</p>
+            </div>
+          </div>
+          <div class="row float-right">
+            <div class="col-md-12">
+              <h6 [class.messageBuyer]="fromBuyer()" [class.messageSeller]="fromSeller()" class="mb-2">{{dateMessage | date:'dd/MM/yy à HH:mm'}}</h6>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

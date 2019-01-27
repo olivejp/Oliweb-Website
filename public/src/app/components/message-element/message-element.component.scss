@@ -1,15 +1,25 @@
-.buyer {
+.cardBuyer {
   background-color: #e2e2e2;
 }
 
-.seller {
+.cardSeller {
   background-color: #646a77;
 }
 
 .card-padding-10 {
-  padding: 10px;
+  padding: 2px;
 }
 
 .row-margin-5 {
   margin: 5px;
+}
+
+.messageBuyer {
+  color: #646a77;
+  font-weight: bold;
+}
+
+.messageSeller {
+  color: #ffffff;
+  font-weight: bold;
 }

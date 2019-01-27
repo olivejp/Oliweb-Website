@@ -8,8 +8,9 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 @Injectable()
 export class SignInService {
 
-  // isAuth = false;
-  isAuth = true;
+  // TODO repasser à false quand on est en production
+  isAuth = false;
+  // isAuth = true;
   userAuthenticated: User;
   authSubject = new Subject<boolean>();
   provider: string;
@@ -71,8 +72,9 @@ export class SignInService {
   }
 
   getUserAuth(): User {
-    return this.userQualification;
-    // return this.userAuthenticated;
+    // TODO Enlever quand on passe en production
+    // return this.userQualification;
+    return this.userAuthenticated;
   }
 
   signOutGoogle() {

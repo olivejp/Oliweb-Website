@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, ParamMap} from "@angular/router";
 import {ChatService} from "../../services/ChatService";
 import {Chat} from "../../domain/chat.model";
 import {SignInService} from "../../services/SignInService";
@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   queryAnnonceUid: string;
   querySellerUid: string;
   queryBuyerUid: string;
+  queryTitreAnnonce: string;
 
   action: string;
   chats: Chat[];
@@ -29,6 +30,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   messageToSend: string;
 
+  shouldCreateChatBeforeSendMessage: boolean;
+
   subscription: Subscription;
   subscriptionChat: Subscription;
   subscriptionChatDeleted: Subscription;
@@ -39,9 +42,39 @@ export class ChatComponent implements OnInit, OnDestroy {
               private chatService: ChatService) {
   }
 
+  getAllQueryParams(params: ParamMap) {
+    this.action = params.get('action');
+    this.queryAnnonceUid = params.get('annonceUid');
+    this.querySellerUid = params.get('sellerUid');
+    this.queryBuyerUid = params.get('buyerUid');
+    this.queryTitreAnnonce = params.get('titreAnnonce');
+  }
+
+  createNewChat(): Chat {
+    // On créé un nouveau chat
+    let members = {
+      [this.querySellerUid]: true,
+      [this.queryBuyerUid]: true
+    };
+
+    return new Chat(null,
+      this.queryBuyerUid,
+      this.querySellerUid,
+      this.queryAnnonceUid,
+      null,
+      this.queryTitreAnnonce,
+      null,
+      null,
+      members
+    );
+  }
+
   ngOnInit() {
 
     let userUid = this.signInService.getUserAuth().uid;
+
+    // Par défaut on a pas besoin de créer un chat
+    this.shouldCreateChatBeforeSendMessage = false;
 
     // Recherche de tout les chats de l'utilisateur connecté
     this.chatService.getChatsByUidUser(userUid)
@@ -50,15 +83,41 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // Récupération des queryParams dans la route
     this.route.queryParamMap.subscribe(params => {
-      this.action = params.get('action');
-      this.queryAnnonceUid = params.get('annonceUid');
-      this.querySellerUid = params.get('sellerUid');
-      this.queryBuyerUid = params.get('buyerUid');
 
-      if (this.action === 'sendMessage') {
-        // TODO finir la création d'un nouveau chat.
+        this.getAllQueryParams(params);
+
+        if (this.action === 'sendMessage') {
+          // 1 - Rechercher si ce chat n'existe pas déjà
+          this.chatService.getChatsByUidUser(this.signInService.getUserAuth().uid)
+            .then(chatList => {
+
+                let chatFound: boolean = false;
+
+                // We try to find the corresponding chat
+                for (let chat of chatList) {
+                  // Si pour cette annonce, pour cet acheteur et pour ce vendeur on a un chat, alors c'est le bon.
+                  if (chat.uidAnnonce === this.queryAnnonceUid && chat.uidBuyer === this.queryBuyerUid && chat.uidSeller === this.querySellerUid) {
+                    this.selectedChat = chat;
+                    chatFound = true;
+                    break;
+                  }
+                }
+
+                // we don't found the corresponding chat, so we will create one
+                if (!chatFound) {
+                  // Il faudra créer un nouveau chat, qu'on enregistrera que si on envoie un message
+                  this.shouldCreateChatBeforeSendMessage = true;
+                  this.selectedChat = this.createNewChat();
+
+                  // On le rajoute dans les chats disponible
+                  this.chats.push(this.selectedChat);
+                }
+              }
+            )
+            .catch(reason => console.error(new Error(reason)));
+        }
       }
-    });
+    );
 
     // On va écouter les nouveaux chats
     this.subscriptionChat = this.chatService.listenForAddedChatsByUserUid(userUid)
@@ -106,18 +165,33 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     if (this.messageToSend && this.messageToSend.length > 0) {
-      let message: Message = new Message();
-      message.message = this.messageToSend;
-      message.uidChat = this.selectedChat.uid;
-      message.uidAuthor = this.signInService.getUserAuth().uid;
-      message.read = false;
-      this.messageService.sendMessage(message)
-        .then(value => {
-          console.log("Message correctement envoyé");
-          this.messageToSend = "";
-        })
-        .catch(reason => console.error(new Error(reason)));
+      if (this.shouldCreateChatBeforeSendMessage) {
+        this.selectedChat.lastMessage = this.messageToSend;
+        this.chatService.createChat(this.selectedChat)
+          .then(chatSaved => {
+            this.selectedChat = chatSaved;
+            this.shouldCreateChatBeforeSendMessage = false;
+            this.buildAndSendMessage();
+          })
+          .catch(reason => console.error(new Error(reason)))
+      } else {
+        this.buildAndSendMessage()
+      }
     }
+  }
+
+  buildAndSendMessage() {
+    let message: Message = new Message();
+    message.message = this.messageToSend;
+    message.uidChat = this.selectedChat.uid;
+    message.uidAuthor = this.signInService.getUserAuth().uid;
+    message.read = false;
+    this.messageService.sendMessage(message)
+      .then(value => {
+        console.log("Message correctement envoyé");
+        this.messageToSend = "";
+      })
+      .catch(reason => console.error(new Error(reason)));
   }
 
   ngOnDestroy(): void {

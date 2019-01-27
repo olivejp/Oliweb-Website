@@ -47,6 +47,7 @@ export class AnnonceCreationComponent implements OnInit {
     utilisateur.uuid = user.uid;
     utilisateur.email = user.email;
     utilisateur.telephone = '';
+    utilisateur.photoUrl = user.photoUrl;
     return utilisateur;
   }
 

@@ -44,7 +44,7 @@
                   <div class="dropdown">
                     <button style="background: transparent; border: transparent" class="btn btn-secondary dropdown-toggle" type="button" [hidden]="!isUserAuth()" id="navbarDropdown" data-placement="bottom" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                      <img class="rounded-img" src={{getPhotoVendeurUrl()}}
+                      <img class="rounded-img" [src]="getPhotoVendeurUrl()"
                            width="40px"
                            height="40px"/>
                     </button>

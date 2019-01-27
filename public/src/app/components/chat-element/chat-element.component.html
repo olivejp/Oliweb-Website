@@ -6,6 +6,6 @@
     <h5 style="font-weight: bold">{{chat.titreAnnonce}}</h5>
   </div>
   <div class="col-md-4">
-    <h6 style="font-weight: lighter">{{chatUpdateDate | date:'dd/MM/yy à HH:mm'}}</h6>
+    <h6 *ngIf="chatUpdateDate" style="font-weight: lighter">{{chatUpdateDate | date:'dd/MM/yy à HH:mm'}}</h6>
   </div>
 </div>

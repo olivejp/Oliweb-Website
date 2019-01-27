@@ -26,8 +26,8 @@
     </div>
     <div class="col-md-6" style="margin-bottom: 100px; border-right: 1px solid rgba(0,0,0,.15)">
       <app-message-list [messages]="messagesFromSelectedChat"
-                        [buyer]="(buyerFromSelectedChat) ? buyerFromSelectedChat : null"
-                        [seller]="(sellerFromSelectedChat) ? sellerFromSelectedChat : null"></app-message-list>
+                        [buyer]="buyerFromSelectedChat"
+                        [seller]="sellerFromSelectedChat"></app-message-list>
     </div>
     <div class="col-md-3"></div>
   </div>

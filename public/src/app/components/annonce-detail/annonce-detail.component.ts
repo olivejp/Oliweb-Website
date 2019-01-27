@@ -66,7 +66,8 @@ export class AnnonceDetailComponent implements OnInit {
           action: 'sendMessage',
           annonceUid: this.annonce.uuid,
           sellerUid: this.annonce.utilisateur.uuid,
-          buyerUid: this.signInService.getUserAuth().uid
+          buyerUid: this.signInService.getUserAuth().uid,
+          titreAnnonce: this.annonce.titre
         }
       });
     } else {

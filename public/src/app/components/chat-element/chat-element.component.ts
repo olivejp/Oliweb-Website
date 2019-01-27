@@ -38,16 +38,6 @@ export class ChatElementComponent implements OnInit {
     // Conversion du timestamp en date
     this.chatUpdateDate = new Date(this.chat.updateTimestamp);
 
-    // recherche de l'acheteur
-    this.userService.getUser(this.chat.uidBuyer)
-      .then(user => this.buyer.emit(user))
-      .catch(reason => console.error(new Error(reason)));
-
-    // recherche du vendeur
-    this.userService.getUser(this.chat.uidSeller)
-      .then(user => this.seller.emit(user))
-      .catch(reason => console.error(new Error(reason)));
-
     // recherche de l'url photo du correspondant
     this.userService.getUser((this.signInService.getUserAuth().uid === this.chat.uidBuyer) ? this.chat.uidSeller : this.chat.uidBuyer)
       .then(user => {
@@ -58,5 +48,17 @@ export class ChatElementComponent implements OnInit {
 
   selectChat() {
     this.chatSelected.emit(this.chat);
+
+    // recherche de l'acheteur
+    this.userService.getUser(this.chat.uidBuyer)
+      .then(user => {
+        this.buyer.emit(user);
+      })
+      .catch(reason => console.error(new Error(reason)));
+
+    // recherche du vendeur
+    this.userService.getUser(this.chat.uidSeller)
+      .then(user => this.seller.emit(user))
+      .catch(reason => console.error(new Error(reason)));
   }
 }

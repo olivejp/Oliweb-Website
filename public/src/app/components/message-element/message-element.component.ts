@@ -35,4 +35,14 @@ export class MessageElementComponent implements OnInit {
     return this.seller && this.message.uidAuthor === this.seller.uid;
   }
 
+  getPhotoUrl(): string {
+    if (this.fromSeller()){
+      return this.seller.photoUrl;
+    }
+
+    if (this.fromBuyer()){
+      return this.buyer.photoUrl;
+    }
+  }
+
 }

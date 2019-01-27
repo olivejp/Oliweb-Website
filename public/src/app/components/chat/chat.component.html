@@ -1,8 +1,8 @@
-<div class="container-fluid" style="min-height: 500px; height: 100vh">
+<div class="container-fluid" style="min-height: 500px; height: 100vh;">
   <div class="row" style="min-height: 500px; height: 100vh">
     <div class="col-md-3">
 
-      <div *ngIf="!chats || chats.length === 0" class="list-group" style="margin-top: 30px">
+      <div *ngIf="!chats || chats.length === 0" class="list-group" style="margin-top: 30px; position: fixed;">
         <button  type="button" class="list-group-item list-group-item-action">
           <h4>
             Aucun élément
@@ -10,7 +10,7 @@
         </button>
       </div>
 
-      <div *ngIf="chats && chats.length > 0" class="list-group" style="margin-top: 30px">
+      <div *ngIf="chats && chats.length > 0" class="list-group" style="margin-top: 30px; position: fixed;">
         <button type="button" class="list-group-item list-group-item-action title">
           <h4>
             Mes conversations
@@ -24,7 +24,7 @@
         </button>
       </div>
     </div>
-    <div class="col-md-6" style="margin-bottom: 100px; border-right: 1px solid rgba(0,0,0,.15)">
+    <div class="col-md-6">
       <app-message-list [messages]="messagesFromSelectedChat"
                         [buyer]="buyerFromSelectedChat"
                         [seller]="sellerFromSelectedChat"></app-message-list>

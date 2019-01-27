@@ -1,9 +1,19 @@
 .cardBuyer {
   background-color: #e2e2e2;
+  float: right!important;
+  color: #646a77;
+  font-weight: bold;
+  border: 1px solid #e2e2e2;
+  border-radius: 16px;
 }
 
 .cardSeller {
   background-color: #646a77;
+  float: left!important;
+  color: #ffffff;
+  font-weight: bold;
+  border: 1px solid #646a77;
+  border-radius: 16px;
 }
 
 .card-padding-10 {
@@ -12,14 +22,4 @@
 
 .row-margin-5 {
   margin: 5px;
-}
-
-.messageBuyer {
-  color: #646a77;
-  font-weight: bold;
-}
-
-.messageSeller {
-  color: #ffffff;
-  font-weight: bold;
 }

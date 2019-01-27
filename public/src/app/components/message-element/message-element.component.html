@@ -1,7 +1,20 @@
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{message.uidAuthor}}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{dateMessage | date}}</h6>
-    <p class="card-text">{{message.message}}</p>
+<div class="row inline-block row-margin-5">
+  <div class="col-md-12 inline-block">
+    <div [class.cardBuyer]="fromBuyer()" [class.cardSeller]="fromSeller()"  style="padding: 10px;">
+      <div class="row">
+        <div class="col-md-2">
+          <img class="rounded-img" [src]="getPhotoUrl()" style="height: 30px; width: 30px;" alt="Author photo">
+        </div>
+        <div class="col-md-10">
+          <p [class.messageBuyer]="fromBuyer()" [class.messageSeller]="fromSeller()">{{message.message}}</p>
+        </div>
+      </div>
+      <div class="row float-right">
+        <div class="col-md-12">
+          <h6 [class.messageBuyer]="fromBuyer()" [class.messageSeller]="fromSeller()"
+              class="mb-2">{{dateMessage | date:'dd/MM/yy à HH:mm'}}</h6>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

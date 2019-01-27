@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Chat} from "../../domain/chat.model";
 import {UserService} from "../../services/UserService";
 import {SignInService} from "../../services/SignInService";
+import {User} from "../../domain/user.model";
 
 @Component({
   selector: 'app-chat-element',
@@ -11,10 +12,19 @@ import {SignInService} from "../../services/SignInService";
 export class ChatElementComponent implements OnInit {
 
   @Input()
+  selectedChat: Chat;
+
+  @Input()
   chat: Chat;
 
   @Output()
   chatSelected = new EventEmitter<Chat>();
+
+  @Output()
+  buyer = new EventEmitter<User>();
+
+  @Output()
+  seller = new EventEmitter<User>();
 
   chatUpdateDate: Date;
 
@@ -29,8 +39,7 @@ export class ChatElementComponent implements OnInit {
     this.chatUpdateDate = new Date(this.chat.updateTimestamp);
 
     // recherche de l'url photo du correspondant
-    let uidUser = this.signInService.getUserAuth().uid;
-    this.userService.getUser((uidUser === this.chat.uidBuyer) ? this.chat.uidSeller : this.chat.uidBuyer)
+    this.userService.getUser((this.signInService.getUserAuth().uid === this.chat.uidBuyer) ? this.chat.uidSeller : this.chat.uidBuyer)
       .then(user => {
         this.urlPhoto = user.photoUrl;
       })
@@ -39,5 +48,17 @@ export class ChatElementComponent implements OnInit {
 
   selectChat() {
     this.chatSelected.emit(this.chat);
+
+    // recherche de l'acheteur
+    this.userService.getUser(this.chat.uidBuyer)
+      .then(user => {
+        this.buyer.emit(user);
+      })
+      .catch(reason => console.error(new Error(reason)));
+
+    // recherche du vendeur
+    this.userService.getUser(this.chat.uidSeller)
+      .then(user => this.seller.emit(user))
+      .catch(reason => console.error(new Error(reason)));
   }
 }

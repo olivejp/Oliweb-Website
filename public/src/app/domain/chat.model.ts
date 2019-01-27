@@ -7,6 +7,6 @@ export class Chat {
               public titreAnnonce?: string,
               public creationTimestamp?: number,
               public updateTimestamp?: number,
-              public members?: Map<string, boolean>) {
+              public members?: any) {
   }
 }

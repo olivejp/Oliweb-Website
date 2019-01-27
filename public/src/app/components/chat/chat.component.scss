@@ -1,0 +1,21 @@
+.btn-accent {
+  color: #fff;
+  background-color: #ff7043;
+}
+
+button.focus {
+  background-color: #e2e2e2;
+  border-color: #e2e2e2;
+}
+
+button:hover{
+  background-color: #e2e2e2;
+  border-color: #e2e2e2;
+}
+
+button.list-group-item.title {
+  z-index: 5;
+  background-color: #ff7043;
+  border-color: #ff7043;
+  color: #fff;
+}

@@ -9,4 +9,13 @@
   border-radius: 20px;
 }
 
-body { padding-top: 60px; }
+body {
+  padding-top: 60px;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+
+img.rounded-img {
+  border-radius: 50%;
+}

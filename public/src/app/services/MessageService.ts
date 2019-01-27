@@ -1,12 +1,39 @@
 import {Injectable} from '@angular/core';
 import {Message} from "../domain/message.model";
 import * as firebase from "firebase";
+import {FirebaseUtilityService} from "./FirebaseUtilityService";
 import DataSnapshot = firebase.database.DataSnapshot;
+import {Observable} from "rxjs";
 
 @Injectable()
 export class MessageService {
 
-  constructor() { }
+  constructor(private firebaseUtilityService: FirebaseUtilityService) {
+  }
+
+  sendMessage(message: Message): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.firebaseUtilityService.getServerTimestamp()
+        .then(timestamp => {
+          message.uidMessage = firebase.database().ref('/messages/').push().key;
+          message.timestamp = timestamp;
+          firebase.database().ref('/messages/' + message.uidChat + '/' + message.uidMessage).set(message)
+            .then(value => resolve(value))
+            .catch(reason => reject(reason));
+        })
+        .catch(reason => reject(reason));
+    });
+  }
+
+  listenForAddedMessagesByChatUid(chatUid: string): Observable<Message> {
+    return Observable.create(observer => {
+      firebase.database()
+        .ref('/messages/' + chatUid)
+        .on('child_added', function(data) {
+          observer.next(data.val());
+        });
+    })
+  }
 
   getMessagesByChatUid(chatUid: string): Promise<Message[]> {
     return new Promise((resolve, reject) => {

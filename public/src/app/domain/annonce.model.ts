@@ -4,6 +4,7 @@ export class UtilisateurEmbeded {
   constructor(public email?: string,
               public profile?: string,
               public telephone?: string,
+              public photoUrl?: string,
               public uuid?: string) {
   }
 }

@@ -43,6 +43,6 @@ export class NavbarComponent implements OnInit {
   }
 
   getPhotoVendeurUrl() {
-    return this.signInService.isAuth ? this.signInService.getUserAuth().photoUrl : null;
+    return (this.signInService.isAuth && this.signInService.getUserAuth()) ? this.signInService.getUserAuth().photoUrl : null;
   }
 }

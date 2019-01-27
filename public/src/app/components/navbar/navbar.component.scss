@@ -2,6 +2,23 @@
   background-color: #e2e2e2;
 }
 
+.oliweb-brand {
+  text-align: justify-all;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 30px;
+  color: #ff7043;
+  font-weight: bold
+}
+
+.oliweb-brand:visited {
+  color: #ff7043;
+}
+
+.oliweb-brand:hover {
+  color: #ff7043;
+}
+
+
 .oliweb-avatar {
   cursor: pointer;
   border-radius: 50%;
@@ -34,10 +51,6 @@
   }
 }
 
-
-.rounded-img {
-  border-radius: 50%;
-}
 
 @media (min-width: 1900px) {
   .navbar.navbar-expand-xxl {

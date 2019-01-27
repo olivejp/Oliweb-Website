@@ -4,7 +4,6 @@ import {AnnonceService} from "../../services/AnnonceService";
 import {Annonce} from "../../domain/annonce.model";
 import {UserService} from "../../services/UserService";
 import {ActivatedRoute, Router} from "@angular/router";
-import {routerNgProbeToken} from "@angular/router/src/router_module";
 import {SignInService} from "../../services/SignInService";
 
 @Component({
@@ -62,7 +61,15 @@ export class AnnonceDetailComponent implements OnInit {
 
   goToChat() {
     if (this.signInService.isAuth) {
-      this.router.navigate(['/chat'], {queryParams: {annonceUid: this.annonce.uuid, sellerUid: this.annonce.utilisateur.uuid, buyerUid: this.signInService.getUserAuth().uid}});
+      this.router.navigate(['/chat'], {
+        queryParams: {
+          action: 'sendMessage',
+          annonceUid: this.annonce.uuid,
+          sellerUid: this.annonce.utilisateur.uuid,
+          buyerUid: this.signInService.getUserAuth().uid,
+          titreAnnonce: this.annonce.titre
+        }
+      });
     } else {
       this.router.navigate(['/login'])
     }

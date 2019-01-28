@@ -9,8 +9,8 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 export class SignInService {
 
   // TODO repasser à false quand on est en production
-  isAuth = false;
-  // isAuth = true;
+  // isAuth = false;
+  isAuth = true;
   userAuthenticated: User;
   authSubject = new Subject<boolean>();
   provider: string;
@@ -73,8 +73,8 @@ export class SignInService {
 
   getUserAuth(): User {
     // TODO Enlever quand on passe en production
-    // return this.userQualification;
-    return this.userAuthenticated;
+    return this.userQualification;
+    // return this.userAuthenticated;
   }
 
   signOutGoogle() {

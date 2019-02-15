@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AnnonceService} from '../../services/AnnonceService';
 import {Annonce, UtilisateurEmbeded} from '../../domain/annonce.model';
 import {CategorieService} from '../../services/CategorieService';
@@ -6,13 +6,15 @@ import {Categorie} from '../../domain/categorie.model';
 import {SignInService} from '../../services/SignInService';
 import {User} from '../../domain/user.model';
 import {Router} from "@angular/router";
+import {PhotoService} from "../../services/PhotoService";
+import {FirebaseUtilityService} from "../../services/FirebaseUtilityService";
 
 @Component({
   selector: 'app-annonce-creation',
   templateUrl: './annonce-creation.component.html',
   styleUrls: ['./annonce-creation.component.scss']
 })
-export class AnnonceCreationComponent implements OnInit {
+export class AnnonceCreationComponent implements OnInit, OnDestroy {
 
   categorieSelected: Categorie;
   annonce: Annonce;
@@ -20,20 +22,29 @@ export class AnnonceCreationComponent implements OnInit {
   contactEmail: boolean;
   contactTel: boolean;
   contactMsg: boolean;
+  isUploading: boolean;
+  selectedFile: File;
+  hasBeenSend: boolean;
+  photoUrlToDelete: string;
 
   categories: Categorie[];
 
   constructor(private annonceService: AnnonceService,
               private categorieService: CategorieService,
               private signInService: SignInService,
-              private router: Router) {
+              private router: Router,
+              private photoService: PhotoService,
+              private firebaseUtilityService: FirebaseUtilityService) {
   }
 
   ngOnInit() {
+    this.hasBeenSend = false;
     this.annonce = new Annonce();
+    this.annonce.uuid = this.annonceService.getNewUid();
     this.annonce.contactTel = false;
     this.annonce.contactMsg = false;
     this.annonce.contactEmail = false;
+    this.annonce.datePublication = -1;
     this.annonce.photos = [];
 
     this.categorieService.getAllCategories().then((categories) => {
@@ -87,6 +98,7 @@ export class AnnonceCreationComponent implements OnInit {
     this.annonce.categorie = this.categorieSelected;
     this.annonceService.saveAnnonce(this.annonce)
       .then((data) => {
+        this.hasBeenSend = true;
         this.router.navigate(['annonces']);
       })
       .catch((reason) => {
@@ -113,4 +125,55 @@ export class AnnonceCreationComponent implements OnInit {
   setCategorie(categorie: Categorie) {
     this.categorieSelected = categorie;
   };
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+    this.onUpload();
+  }
+
+  onUpload() {
+    this.isUploading = true;
+    this.photoService.uploadImage(this.selectedFile, this.signInService.getUserAuth(), this.annonce)
+      .then(uploadTaskSnapshot => {
+        this.annonce.photos.push(uploadTaskSnapshot.downloadURL);
+        this.isUploading = false;
+      })
+      .catch(reason => {
+        console.error(reason);
+        this.isUploading = false;
+      });
+  }
+
+  ngOnDestroy(): void {
+    // Le composant a été détruit sans que l'annonce n'ait été envoyée
+    if (!this.hasBeenSend && this.annonce.photos && this.annonce.photos.length > 0) {
+
+      // On veut donc supprimer les images qui ont été stockées sur notre serveur pour rien.
+      for (let photoUrl of this.annonce.photos) {
+        let fileName = this.firebaseUtilityService.getFilename(photoUrl);
+        this.photoService.deleteFile(fileName)
+          .then(value => console.log('Fichier bien supprimé'))
+          .catch(reason => console.error(reason));
+      }
+    }
+  }
+
+  selectPhotoToDelete(photoUrlToDelete: string){
+    this.photoUrlToDelete = photoUrlToDelete;
+  }
+
+  deletePhoto(){
+    const fileName = this.firebaseUtilityService.getFilename(this.photoUrlToDelete);
+    this.photoService.deleteFile(fileName)
+      .then(value => {
+        let indexOf = this.annonce.photos.indexOf(this.photoUrlToDelete);
+        this.annonce.photos.splice(indexOf, 1);
+        this.photoUrlToDelete = '';
+        console.log('Fichier bien supprimé');
+      })
+      .catch(reason => {
+        this.photoUrlToDelete = '';
+        console.error(reason)
+      });
+  }
 }

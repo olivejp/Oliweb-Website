@@ -37,12 +37,21 @@
            name="prix">
   </div>
 
-  <!--TODO Finir l'envoi des images-->
-  <!--<div class="form-group">-->
-    <!--<label for="exampleFormControlFile1">Example file input</label>-->
-    <!--<input type="file" class="form-control-file" id="exampleFormControlFile1">-->
-  <!--</div>-->
+  <!-- Affichage des photos uploadées -->
+  <div class="form-group">
+    <label>Photos jointes</label>
+    <div *ngIf="annonce.photos && annonce.photos.length > 0" style="margin-bottom: 10px">
+      <img *ngFor="let photoUrl of annonce.photos" [src]="photoUrl" alt="Photo annonce" style="height: 100px;width: 100px; border-radius: 16px; margin-left: 10px"
+      (click)="selectPhotoToDelete(photoUrl)" data-toggle="modal" data-target="#exampleModalCenter">
+    </div>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" (change)="onFileChanged($event)" accept="image/*">
+    <div *ngIf="isUploading" class="progress" style="margin-top: 10px">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+           style="width: 100%"></div>
+    </div>
+  </div>
 
+  <label>Contactez moi</label>
   <div class="form-check">
     <input type="checkbox" class="form-check-input" (change)="onChangeContactTel()"
            id="checkBoxContactTel">
@@ -68,5 +77,26 @@
     </div>
   </nav>
 
+
+  <!-- Modal de suppression -->
+  <div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Voulez vous vraiment supprimer cette photo ?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="align-items: center">
+          <img [src]="photoUrlToDelete" style="height: 200px;width: auto; border-radius: 16px" alt="Photo to delete">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deletePhoto()">Oui</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>

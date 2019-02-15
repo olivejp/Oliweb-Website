@@ -18,6 +18,30 @@ export class FirebaseUtilityService {
     })
   }
 
+  getFilename(url: string): string {
+    if (url) {
+      const filename = url.toString().match(/.*\/(.+?)\./);
+      if (filename && filename.length > 1) {
+        const extension = this.getExtension(url);
+        return filename[1] + "." + extension;
+      }
+    }
+    return "";
+  }
+
+   getExtension(filename: string): string {
+    if (filename) {
+      const extension = filename.split('.').pop();
+      if (extension.indexOf("?") !== -1) {
+        // On supprime les queryParams derrière qui sont juste après le ?
+        return extension.substring(0, extension.indexOf("?"));
+      } else {
+        return extension;
+      }
+    }
+    return "";
+  };
+
   getServerTimestamp(): Promise<number> {
     return new Promise((resolve, reject) => {
       firebase.database().ref('timestamp').child('now').set(ServerValue.TIMESTAMP, function (error) {

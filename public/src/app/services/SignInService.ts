@@ -2,15 +2,14 @@ import * as firebase from "firebase";
 import {Injectable} from "@angular/core";
 import {User} from "../domain/user.model";
 import {Subject} from "rxjs/Subject";
+import {environment} from "../../environments/environment";
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 @Injectable()
 export class SignInService {
 
-  // TODO repasser à false quand on est en production
-  isAuth = false;
-  // isAuth = true;
+  isAuth: boolean;
   userAuthenticated: User;
   authSubject = new Subject<boolean>();
   provider: string;
@@ -25,6 +24,7 @@ export class SignInService {
   );
 
   constructor() {
+    this.isAuth = !environment.production;
   }
 
   emitIsAuth() {
@@ -72,9 +72,7 @@ export class SignInService {
   }
 
   getUserAuth(): User {
-    // TODO Enlever quand on passe en production
-    // return this.userQualification;
-    return this.userAuthenticated;
+    return (environment.production) ? this.userAuthenticated : this.userQualification;
   }
 
   signOutGoogle() {

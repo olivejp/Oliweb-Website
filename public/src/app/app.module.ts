@@ -33,6 +33,7 @@ import { ChatElementComponent } from './components/chat-element/chat-element.com
 import { MessageElementComponent } from './components/message-element/message-element.component';
 import { MessageListComponent } from './components/message-list/message-list.component';
 import {MessageService} from "./services/MessageService";
+import {PhotoService} from "./services/PhotoService";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},
@@ -78,7 +79,7 @@ const appRoutes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(appRoutes, {useHash: true})
   ],
-  providers: [MessageService, AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService, NewAnnonceGuardGuard],
+  providers: [PhotoService, MessageService, AnnonceService, SignInService, UserService, FirebaseUtilityService, CategorieService, ChatService, SearchRequestService, LoggerService, NewAnnonceGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

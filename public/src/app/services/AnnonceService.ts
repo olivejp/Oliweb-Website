@@ -58,6 +58,10 @@ export class AnnonceService implements OnInit {
       );
   }
 
+  getNewUid(): string{
+    return firebase.database().ref('annonces').push().key;
+  }
+
   saveAnnonce(annonce: Annonce): Promise<any> {
     return new Promise((resolve, reject) =>
       this.firebaseUtilityService.getServerTimestamp()

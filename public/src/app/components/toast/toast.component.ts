@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import {Toast} from "../../domain/toast.model";
+import {Component, OnInit} from "@angular/core";
 
 @Component({
   selector: 'app-toast',
@@ -10,7 +10,8 @@ export class ToastComponent implements OnInit {
 
   toast: Toast;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

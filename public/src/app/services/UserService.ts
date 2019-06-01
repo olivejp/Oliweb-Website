@@ -1,7 +1,7 @@
-import {Injectable, OnInit} from '@angular/core';
 import {User} from "../domain/user.model";
 import * as firebase from "firebase";
 import {FirebaseUtilityService} from "./FirebaseUtilityService";
+import {Injectable, OnInit} from "@angular/core";
 
 @Injectable()
 export class UserService implements OnInit {

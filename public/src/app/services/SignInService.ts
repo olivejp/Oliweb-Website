@@ -1,10 +1,10 @@
 import * as firebase from "firebase";
-import {Injectable} from "@angular/core";
 import {User} from "../domain/user.model";
-import {Subject} from "rxjs/Subject";
 import {environment} from "../../environments/environment";
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import {Injectable} from "@angular/core";
+import {Subject} from "rxjs";
 
 @Injectable()
 export class SignInService {

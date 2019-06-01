@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SignInService} from "../../services/SignInService";
 import {Annonce} from "../../domain/annonce.model";
 import {AnnonceService} from "../../services/AnnonceService";
-import {Router} from "@angular/router";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {SearchRequestService} from "../../services/SearchRequestService";
+import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-annonce-list-container',

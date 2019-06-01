@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
 import {Annonce} from "../../domain/annonce.model";
 import {LoggerService} from "../../services/LoggerService";
 import {AnnonceService} from "../../services/AnnonceService";
 import {IPagedResults} from "../../shared/interface";
-import {ActivatedRoute, Router} from "@angular/router";
 import {SearchRequestService} from "../../services/SearchRequestService";
+import {Component, Input, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-annonce-list-search',

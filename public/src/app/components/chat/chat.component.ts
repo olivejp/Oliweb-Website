@@ -1,5 +1,3 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap} from "@angular/router";
 import {ChatService} from "../../services/ChatService";
 import {Chat} from "../../domain/chat.model";
 import {SignInService} from "../../services/SignInService";
@@ -7,6 +5,8 @@ import {Message} from "../../domain/message.model";
 import {MessageService} from "../../services/MessageService";
 import {User} from "../../domain/user.model";
 import {Subscription} from "rxjs";
+import {Component, OnDestroy, OnInit} from "@angular/core";
+import {ActivatedRoute, ParamMap} from "@angular/router";
 
 @Component({
   selector: 'app-chat',

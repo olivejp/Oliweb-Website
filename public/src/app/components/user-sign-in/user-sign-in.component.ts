@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {SignInService} from "../../services/SignInService";
 import {UserService} from "../../services/UserService";
 import {ChatService} from "../../services/ChatService";
+import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import UserCredential = firebase.auth.UserCredential;
 
 @Component({
   selector: 'app-user-sign-in',
@@ -44,7 +45,7 @@ export class UserSignInComponent implements OnInit {
 
   onSignInGoogle() {
     this.signInService.signInGoogle()
-      .then(result => {
+      .then((result: UserCredential) => {
         const user = result.user;
         this.authStatus = true;
         this.getOrCreateUser(user);
@@ -57,7 +58,7 @@ export class UserSignInComponent implements OnInit {
 
   onSignInFacebook() {
     this.signInService.signInFacebook()
-      .then(result => {
+      .then((result: UserCredential) => {
         const user = result.user;
         this.authStatus = true;
         this.getOrCreateUser(user);

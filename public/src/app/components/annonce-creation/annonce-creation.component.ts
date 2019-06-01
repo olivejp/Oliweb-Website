@@ -1,13 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AnnonceService} from '../../services/AnnonceService';
 import {Annonce, UtilisateurEmbeded} from '../../domain/annonce.model';
 import {CategorieService} from '../../services/CategorieService';
 import {Categorie} from '../../domain/categorie.model';
 import {SignInService} from '../../services/SignInService';
 import {User} from '../../domain/user.model';
-import {Router} from "@angular/router";
 import {PhotoService} from "../../services/PhotoService";
 import {FirebaseUtilityService} from "../../services/FirebaseUtilityService";
+import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-annonce-creation',

@@ -1,18 +1,14 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AboutComponent} from './about/about.component';
 import {UserSignInComponent} from './components/user-sign-in/user-sign-in.component';
-import {RouterModule, Routes} from "@angular/router";
 import {AnnonceElementComponent} from './components/annonce-element/annonce-element.component';
 import {AnnonceService} from "./services/AnnonceService";
 import {SignInService} from "./services/SignInService";
 import {NotFoundComponent} from './not-found/not-found.component';
 import {AnnonceCreationComponent} from './components/annonce-creation/annonce-creation.component';
 import {UserService} from "./services/UserService";
-import {FormsModule} from "@angular/forms";
 import {AnnonceDetailComponent} from "./components/annonce-detail/annonce-detail.component";
 import {FirebaseUtilityService} from "./services/FirebaseUtilityService";
 import {CategorieService} from "./services/CategorieService";
@@ -34,6 +30,10 @@ import { MessageElementComponent } from './components/message-element/message-el
 import { MessageListComponent } from './components/message-list/message-list.component';
 import {MessageService} from "./services/MessageService";
 import {PhotoService} from "./services/PhotoService";
+import {RouterModule, Routes} from "@angular/router";
+import {NgModule} from "@angular/core";
+import {FormsModule} from "@angular/forms";
+import {BrowserModule} from "@angular/platform-browser";
 
 const appRoutes: Routes = [
   {path: 'annonces', component: AnnonceListContainerComponent},

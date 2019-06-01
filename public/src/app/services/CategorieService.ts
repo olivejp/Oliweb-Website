@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import * as firebase from "firebase";
 import {Categorie} from "../domain/categorie.model";
-import {Subject} from "rxjs/Subject";
+import {Subject} from "rxjs";
 import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable()

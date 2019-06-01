@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Chat} from "../../domain/chat.model";
 import {UserService} from "../../services/UserService";
 import {SignInService} from "../../services/SignInService";
 import {User} from "../../domain/user.model";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 
 @Component({
   selector: 'app-chat-element',

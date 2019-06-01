@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
 import {Message} from "../domain/message.model";
 import * as firebase from "firebase";
 import {FirebaseUtilityService} from "./FirebaseUtilityService";
-import DataSnapshot = firebase.database.DataSnapshot;
 import {Observable} from "rxjs";
+import {Injectable} from "@angular/core";
+import DataSnapshot = firebase.database.DataSnapshot;
 
 @Injectable()
 export class MessageService {

@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {Annonce} from "../../domain/annonce.model";
 import {UserService} from "../../services/UserService";
+import {Component, Input, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-annonce-element',
